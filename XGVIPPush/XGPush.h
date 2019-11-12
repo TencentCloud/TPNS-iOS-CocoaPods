@@ -569,5 +569,13 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  */
 - (nonnull NSString *)sdkVersion;
 
+
+/**
+ @brief 上报日志信息 (TPNS SDK1.2.4.1+)
+ @param handler 异步地返回上报结果
+ @note 回调参数可能会被触发多次，如果存在多个日志文件
+*/
+- (void)uploadLogCompletionHandler:(nullable void(^)(BOOL result,  NSString * _Nullable errorMessage))handler;
+
 @end
 			
