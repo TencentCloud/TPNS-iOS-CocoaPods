@@ -2,7 +2,35 @@
  腾讯移动推送 SDK(iOS) CocoaPods 托管镜像
  
  -------------------------------------------
- 
+ VERSION 1.2.4.6
+-------------------------------------------
+* Optimize SDK registration process and improve registration success rate
+* Optimize rich media push, support resources without suffix
+* Fix other known issues
+
+版本 1.2.4.6
+-------------------------------------------
+* 优化SDK注册流程，提升注册成功率
+* 优化富媒体推送，支持无后缀名的资源
+* 修复其他已知问题
+
+
+VERSION 1.2.4.5
+-------------------------------------------
+* Add SDK crash monitor
+* Optimize message arrival statistics
+* Optimize device count statistics
+* Optimize SDK I/O performance
+* Optimize and improve SDK stability
+
+
+版本 1.2.4.5
+-------------------------------------------
+* SDK增加Crash监控
+* 优化抵达数据统计
+* 优化累计设备量统计
+* 优化SDK I/O性能
+* 优化提升SDK稳定性
  版本 1.2.4.4
 -------------------------------------------
 * 优化SDK注册流程，提升通知消息触达

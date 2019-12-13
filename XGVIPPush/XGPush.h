@@ -104,7 +104,7 @@ typedef NS_OPTIONS(NSUInteger, XGNotificationCategoryOptions) {
  @return 管理点击行为的分类对象
  @note 通知栏带有点击事件的特性，只有在iOS 8+ 、macOS 10.14+ 以上支持，iOS 8 、macOS 10.14  or earlier的版本，此方法返回空
  */
-+ (nullable id)categoryWithIdentifier:(nonnull NSString *)identifier actions:(nullable NSArray<XGNotificationAction *> *)actions intentIdentifiers:(nullable NSArray<NSString *> *)intentIdentifiers options:(XGNotificationCategoryOptions)options;
++ (nullable id)categoryWithIdentifier:(nonnull NSString *)identifier actions:(nullable NSArray<id> *)actions intentIdentifiers:(nullable NSArray<NSString *> *)intentIdentifiers options:(XGNotificationCategoryOptions)options;
 
 /**
  @brief 分类对象的标识
@@ -165,7 +165,7 @@ typedef NS_OPTIONS(NSUInteger, XGUserNotificationTypes) {
  @param types 注册通知的样式
  @return 配置对象
  */
-+ (nullable instancetype)configureNotificationWithCategories:(nullable NSSet<XGNotificationCategory *> *)categories types:(XGUserNotificationTypes)types;
++ (nullable instancetype)configureNotificationWithCategories:(nullable NSSet<id> *)categories types:(XGUserNotificationTypes)types;
 
 - (nonnull instancetype)init NS_UNAVAILABLE;
 /**
@@ -321,12 +321,12 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  
  @param identifiers 指定绑定标识，标签字符串不允许有空格或者是tab字符
  @param type 指定绑定类型
-@note 对于账号操作，需要使用json数组，例如：
+ @note 对于swift项目accountType值类型需使用NSNumber例如"accountType":NSNumber(0)
+ @note 对于账号操作，需要使用json数组，例如：
  [
- {"account" : "account1", "account_type" : 1},
- {"account" : "account2","account_type" : 0}
+ {"account" : "account1", "accountType" : 0},
+ {"account" : "account2","accountType" : 0}
  ]
- 账号类型，请参照： http://xg.qq.com/docs/server_api/v3/push_api_v3.html#账号类型
  */
 - (void)bindWithIdentifiers:(nonnull NSArray *)identifiers type:(XGPushTokenBindType)type;
 
@@ -335,9 +335,10 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  
  @param identifiers 指定解绑标识，标签字符串不允许有空格或者是tab字符
  @param type 指定解绑类型
+ @note 对于swift项目accountType值类型需使用NSNumber例如"accountType":NSNumber(0)
  @note 标签字符串不允许有空格或者是tab字符；对于账号操作，需要使用json数组，例如：
  [
- {"account" : "account1", "account_type" : 1},
+ {"account" : "account1", "account_type" : 0},
  {"account" : "account2","account_type" : 0}
  ]
  账号类型，请参照： http://xg.qq.com/docs/server_api/v3/push_api_v3.html#账号类型
@@ -349,12 +350,12 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  
  @param identifiers 标签标识字符串数组，标签字符串不允许有空格或者是tab字符
  @param type 标识类型
+ @note 对于swift项目accountType值类型需使用NSNumber例如"accountType":NSNumber(0)
  @note 若指定为标签类型，此接口会将当前 Token 对应的旧有的标签全部替换为当前的标签；若指定账号类型，对于账号操作，则需要使用json数组，例如：
  [
- {"account" : "account1", "account_type" : 1},
+ {"account" : "account1", "account_type" : 0},
  {"account" : "account2","account_type" : 0}
  ]
- 账号类型，请参照： http://xg.qq.com/docs/server_api/v3/push_api_v3.html#账号类型
  */
 - (void)updateBindedIdentifiers:(nonnull NSArray *)identifiers bindType:(XGPushTokenBindType)type;
 
@@ -448,12 +449,14 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  
  @param deviceToken 当前设备的token
  @param error 错误信息
+ @note 暂不支持
  */
 - (void)xgPushDidRegisteredPushKitDeviceToken:(nullable NSString *)deviceToken error:(nullable NSError *)error;
 
 
 /**
  @brief 当PushKit token失效时，用以通知delegate
+ @note 暂不支持
  */
 - (void)xgPushDidInvalidatePushKitToken;
 
@@ -493,7 +496,7 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
 /**
  @brief 返回信鸽推送服务的状态
  */
-@property (assign, readonly) BOOL xgNotificationStatus __deprecated_msg("XG SDK 3.3+, instead, you can use deviceTokenDidRegisteredXGService property");
+@property (assign, readonly) BOOL xgNotificationStatus __deprecated_msg("Instead, you can use deviceTokenDidRegisteredXGService property");
 
 
 /**

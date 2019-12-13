@@ -77,4 +77,6 @@ typedef NS_ENUM(NSInteger, XGPushStatMTAErrorCode) {
 #pragma mark - XG
 + (XGPushStatMTAErrorCode)reportMessageInfo:(NSDictionary *)info;
 
++ (XGPushStatMTAErrorCode)reportCrashInfo:(NSDictionary *)info;
+
 @end
