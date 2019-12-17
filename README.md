@@ -2,6 +2,13 @@
  腾讯移动推送 SDK(iOS) CocoaPods 托管镜像
  
  -------------------------------------------
+ 
+VERSION 1.2.4.7
+-------------------------------------------
+* Improve stability, fix crash caused by message statistics and log statistics
+版本 1.2.4.7
+-------------------------------------------
+* 提升稳定性，修复消息统计和日志记录触发的崩溃问题
  VERSION 1.2.4.6
 -------------------------------------------
 * Optimize SDK registration process and improve registration success rate
