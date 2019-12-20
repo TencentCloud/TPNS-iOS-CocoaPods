@@ -8,6 +8,7 @@ VERSION 1.2.4.8
 -------------------------------------------
 
 * Improve stability, fix crash caused by message statistics
+
 版本 1.2.4.8
 -------------------------------------------
 
