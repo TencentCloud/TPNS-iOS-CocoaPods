@@ -190,7 +190,7 @@ typedef NS_OPTIONS(NSUInteger, XGUserNotificationTypes) {
 /**
  @brief 设备token绑定的类型，绑定指定类型之后，就可以在信鸽前端按照指定的类型进行指定范围的推送
 
- - XGPushTokenBindTypeNone: 当前设备token不绑定任何类型，可以使用token单推，或者是全量推送（3.2.0+ 不推荐使用 ）
+ - XGPushTokenBindTypeNone: 当前设备token不绑定任何类型，可以使用token单推，或者是全量推送（不推荐使用 ）
  - XGPushTokenBindTypeAccount: 当前设备token与账号绑定之后，可以使用账号推送
  - XGPushTokenBindTypeTag: 当前设备token与指定标签绑定之后，可以使用标签推送
  */
@@ -296,6 +296,8 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
 
  @param identifier 指定绑定标识
  @param type 指定绑定类型
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note 对于标签操作，标签字符串不允许有空格或者是tab字符
  */
 - (void)bindWithIdentifier:(nonnull NSString *)identifier type:(XGPushTokenBindType)type;
 
@@ -304,7 +306,8 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
 
  @param identifier 指定解绑标识
  @param type 指定解绑类型
- @note 若需要解绑全部标签，建议使用 removeAllTags: 接口
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用；若需要清除所有标识，建议使用 clearAllIdentifiers:
+ @note 对于标签操作，标签字符串不允许有空格或者是tab字符
  */
 - (void)unbindWithIdentifer:(nonnull NSString *)identifier type:(XGPushTokenBindType)type;
 
@@ -321,12 +324,9 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  
  @param identifiers 指定绑定标识，标签字符串不允许有空格或者是tab字符
  @param type 指定绑定类型
- @note 对于swift项目accountType值类型需使用NSNumber例如"accountType":NSNumber(0)
- @note 对于账号操作，需要使用json数组，例如：
- [
- {"account" : "account1", "accountType" : 0},
- {"account" : "account2","accountType" : 0}
- ]
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note 对于标签操作，标签字符串不允许有空格或者是tab字符
+ @note 对于账号操作，需要使用字典数组且key是固定要求，Objective-C的写法 : @[@{@"account":identifier, @"accountType":@(0)}]； Swift的写法：["account":identifier, "accountType":NSNumber(0)]
  */
 - (void)bindWithIdentifiers:(nonnull NSArray *)identifiers type:(XGPushTokenBindType)type;
 
@@ -335,13 +335,9 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  
  @param identifiers 指定解绑标识，标签字符串不允许有空格或者是tab字符
  @param type 指定解绑类型
- @note 对于swift项目accountType值类型需使用NSNumber例如"accountType":NSNumber(0)
- @note 标签字符串不允许有空格或者是tab字符；对于账号操作，需要使用json数组，例如：
- [
- {"account" : "account1", "account_type" : 0},
- {"account" : "account2","account_type" : 0}
- ]
- 账号类型，请参照： http://xg.qq.com/docs/server_api/v3/push_api_v3.html#账号类型
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用；若需要清除所有标识，建议使用 clearAllIdentifiers:；
+ @note 对于标签操作，标签字符串不允许有空格或者是tab字符
+ @note 对于账号操作，需要使用字典数组且key是固定要求，Objective-C的写法 : @[@{@"account":identifier, @"accountType":@(0)}]； Swift的写法：["account":identifier, "accountType":NSNumber(0)]
  */
 - (void)unbindWithIdentifers:(nonnull NSArray *)identifiers type:(XGPushTokenBindType)type;
 
@@ -350,12 +346,9 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  
  @param identifiers 标签标识字符串数组，标签字符串不允许有空格或者是tab字符
  @param type 标识类型
- @note 对于swift项目accountType值类型需使用NSNumber例如"accountType":NSNumber(0)
- @note 若指定为标签类型，此接口会将当前 Token 对应的旧有的标签全部替换为当前的标签；若指定账号类型，对于账号操作，则需要使用json数组，例如：
- [
- {"account" : "account1", "account_type" : 0},
- {"account" : "account2","account_type" : 0}
- ]
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note 对于标签操作，标签字符串不允许有空格或者是tab字符
+ @note 对于账号操作，需要使用字典数组且key是固定要求，Objective-C的写法 : @[@{@"account":identifier, @"accountType":@(0)}]； Swift的写法：["account":identifier, "accountType":NSNumber(0)]
  */
 - (void)updateBindedIdentifiers:(nonnull NSArray *)identifiers bindType:(XGPushTokenBindType)type;
 
@@ -363,6 +356,7 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  @brief 根据标识类型，清除所有标识
 
  @param type 标识类型
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
  */
 - (void)clearAllIdentifiers:(XGPushTokenBindType)type;
 
@@ -526,14 +520,6 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
 - (void)stopXGNotification;
 
 /**
- @brief 上报应用收到的推送信息，以便信鸽服务能够统计相关数据，包括但不限于：1.推送消息被点击的次数，2.消息曝光的次数
-
- @param info 应用接收到的推送消息对象的内容
- @note 请在实现application delegate 的 application:didFinishLaunchingWithOptions:或者application:didReceiveRemoteNotification:的方法中调用此接口，参数就使用这两个方法中的NSDictionaryl类型的参数即可，从而完成推送消息的数据统计
- */
-- (void)reportXGNotificationInfo:(nonnull NSDictionary *)info;
-
-/**
  @brief 上报地理位置信息
 
  @param latitude 纬度
@@ -548,14 +534,6 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  @note 此接口是为了实现角标+1的功能，服务器会在这个数值基础上进行角标数新增的操作，调用成功之后，会覆盖之前值
  */
 - (void)setBadge:(NSInteger)badgeNumber;
-
-/**
- @brief 上报推送消息的用户行为
-
- @param response 用户行为
- @note 此接口即统计推送消息中开发者预先设置或者是系统预置的行为标识，可以了解到用户是如何处理推送消息的，又统计消息的点击次数
- */
-- (void)reportXGNotificationResponse:(nullable UNNotificationResponse *)response __IOS_AVAILABLE(10.0) __OSX_AVAILABLE(10.14);
 
 /**
  @brief 查询设备通知权限是否被用户允许

@@ -3,7 +3,16 @@
  
  -------------------------------------------
  
- 
+ VERSION 1.2.5.1
+-------------------------------------------
+* Simplified SDK access, delete reporting API, SDK handles it automatically
+* Improve stability, fix crash caused by SDK Cache
+
+版本 1.2.5.1
+-------------------------------------------
+* 简化接入，删除上报接口，SDK自动处理
+* 提升稳定性，修复缓存模块引发的Crash问题
+
  VERSION 1.2.4.9
 -------------------------------------------
 * Improve stability, fix crash caused by message statistics and a memory leak
