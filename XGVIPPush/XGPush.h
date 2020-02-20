@@ -298,6 +298,7 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  @param type 指定绑定类型
  @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
  @note 对于标签操作，标签字符串不允许有空格或者是tab字符
+ @note 默认账号的类型是XGPushTokenAccountTypeUNKNOWN
  */
 - (void)bindWithIdentifier:(nonnull NSString *)identifier type:(XGPushTokenBindType)type;
 
@@ -308,6 +309,7 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  @param type 指定解绑类型
  @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用；若需要清除所有标识，建议使用 clearAllIdentifiers:
  @note 对于标签操作，标签字符串不允许有空格或者是tab字符
+ @note 默认账号的类型是XGPushTokenAccountTypeUNKNOWN
  */
 - (void)unbindWithIdentifer:(nonnull NSString *)identifier type:(XGPushTokenBindType)type;
 
@@ -327,6 +329,7 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
  @note 对于标签操作，标签字符串不允许有空格或者是tab字符
  @note 对于账号操作，需要使用字典数组且key是固定要求，Objective-C的写法 : @[@{@"account":identifier, @"accountType":@(0)}]； Swift的写法：["account":identifier, "accountType":NSNumber(0)]
+ @note 更多 accountType 请参照 XGPushTokenAccountType 枚举
  */
 - (void)bindWithIdentifiers:(nonnull NSArray *)identifiers type:(XGPushTokenBindType)type;
 
@@ -338,6 +341,7 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用；若需要清除所有标识，建议使用 clearAllIdentifiers:；
  @note 对于标签操作，标签字符串不允许有空格或者是tab字符
  @note 对于账号操作，需要使用字典数组且key是固定要求，Objective-C的写法 : @[@{@"account":identifier, @"accountType":@(0)}]； Swift的写法：["account":identifier, "accountType":NSNumber(0)]
+ @note 更多 accountType 请参照 XGPushTokenAccountType 枚举
  */
 - (void)unbindWithIdentifers:(nonnull NSArray *)identifiers type:(XGPushTokenBindType)type;
 
@@ -349,6 +353,7 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
  @note 对于标签操作，标签字符串不允许有空格或者是tab字符
  @note 对于账号操作，需要使用字典数组且key是固定要求，Objective-C的写法 : @[@{@"account":identifier, @"accountType":@(0)}]； Swift的写法：["account":identifier, "accountType":NSNumber(0)]
+ @note 更多 accountType 请参照 XGPushTokenAccountType 枚举
  */
 - (void)updateBindedIdentifiers:(nonnull NSArray *)identifiers bindType:(XGPushTokenBindType)type;
 
@@ -457,6 +462,30 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
 @end
 
 /**
+  @brief 账号类型，用以细分账号类别
+ */
+
+typedef NS_ENUM(NSUInteger, XGPushTokenAccountType) {
+    XGPushTokenAccountTypeUNKNOWN = (0),            // 未知类型，单账号绑定默认使用
+    XGPushTokenAccountTypeCUSTOM = (1),             // 自定义
+    XGPushTokenAccountTypeIDFA = (1001),            // 广告唯一标识 IDFA
+    XGPushTokenAccountTypePHONE_NUMBER = (1002),    //手机号码
+    XGPushTokenAccountTypeWX_OPEN_ID = (1003),      // 微信 OPENID
+    XGPushTokenAccountTypeQQ_OPEN_ID = (1004),      // QQ OPENID
+    XGPushTokenAccountTypeEMAIL = (1005),           // 邮箱
+    XGPushTokenAccountTypeSINA_WEIBO = (1006),      // 新浪微博
+    XGPushTokenAccountTypeALIPAY = (1007),          // 支付宝
+    XGPushTokenAccountTypeTAOBAO = (1008),          // 淘宝
+    XGPushTokenAccountTypeDOUBAN = (1009),          // 豆瓣
+    XGPushTokenAccountTypeFACEBOOK = (1010),        // FACEBOOK
+    XGPushTokenAccountTypeTWRITTER = (1011),        // TWRITTER
+    XGPushTokenAccountTypeGOOGLE = (1012),          // GOOGLE
+    XGPushTokenAccountTypeBAIDU = (1013),           // 百度
+    XGPushTokenAccountTypeJINGDONG = (1014),        // 京东
+    XGPushTokenAccountTypeLINKIN = (1015)           // LINKIN
+};
+
+/**
  @brief 管理信鸽推送服务的对象，负责注册推送权限、消息的管理、调试模式的开关设置等
  */
 @interface XGPush : NSObject
@@ -500,14 +529,15 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
 
 /**
  @brief 管理应用角标
+ @note 需要在主线程调用
  */
 @property (nonatomic) NSInteger xgApplicationBadgeNumber;
 
 /**
  @brief 通过使用在信鸽官网注册的应用的信息，启动信鸽推送服务
 
- @param appID 通过前台申请的应用ID
- @param appKey 通过前台申请的appKey
+ @param appID 通过TPNS管理台申请的 AccessID
+ @param appKey 通过TPNS管理台申请的 AccessKey
  @param delegate 回调对象
  @note 接口所需参数必须要正确填写，反之信鸽服务将不能正确为应用推送消息
  */
@@ -518,6 +548,25 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  @note 调用此方法将导致当前设备不再接受信鸽服务推送的消息.如果再次需要接收信鸽服务的消息推送，则必须需要再次调用startXG:withAppKey:delegate:方法重启信鸽推送服务
  */
 - (void)stopXGNotification;
+
+/**
+@brief 上报统计数据
+@note 此接口只需要在mac OS 启动方法中调用
+*/
+
+#if TARGET_OS_IPHONE
+- (void)reportXGNotificationInfo:(nonnull NSDictionary *)info __deprecated_msg("You should no longer call it, SDK handles it automatically.");
+#elif TARGET_OS_MAC
+- (void)reportXGNotificationInfo:(nonnull NSDictionary *)info;
+#endif
+
+/**
+ @brief 上报推送消息的用户行为
+
+ @param response 用户行为
+ @note 此接口即统计推送消息中开发者预先设置或者是系统预置的行为标识，可以了解到用户是如何处理推送消息的，又统计消息的点击次数
+ */
+- (void)reportXGNotificationResponse:(nullable UNNotificationResponse *)response __IOS_AVAILABLE(10.0) __OSX_AVAILABLE(10.14) __deprecated_msg("You should no longer call it, SDK handles it automatically.");
 
 /**
  @brief 上报地理位置信息

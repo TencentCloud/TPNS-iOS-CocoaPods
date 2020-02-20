@@ -1,9 +1,17 @@
-# TPNS-iOS
- 腾讯移动推送 SDK(iOS) CocoaPods 托管镜像
- 
- -------------------------------------------
- 
- VERSION 1.2.5.1
+﻿XG iOS SDK ReleaseNote
+
+VERSION 1.2.5.2
+-------------------------------------------
+* Improve accurate push, add enumeration of account types
+* Improve stability, optimize log IO exception and iOS10 receive message callback exception
+
+版本 1.2.5.2
+-------------------------------------------
+* 提升精准推送，新增账号类型的枚举
+* 提升稳定性，优化日志IO异常和iOS10接收消息回调异常的问题
+
+
+VERSION 1.2.5.1
 -------------------------------------------
 * Simplified SDK access, delete reporting API, SDK handles it automatically
 * Improve stability, fix crash caused by SDK Cache
@@ -13,7 +21,8 @@
 * 简化接入，删除上报接口，SDK自动处理
 * 提升稳定性，修复缓存模块引发的Crash问题
 
- VERSION 1.2.4.9
+
+VERSION 1.2.4.9
 -------------------------------------------
 * Improve stability, fix crash caused by message statistics and a memory leak
 * Optimize SDK compatibility
@@ -25,24 +34,20 @@
 
 VERSION 1.2.4.8
 -------------------------------------------
-
 * Improve stability, fix crash caused by message statistics
-
 版本 1.2.4.8
 -------------------------------------------
-
 * 提升稳定性，修复消息统计触发的崩溃问题
 
 VERSION 1.2.4.7
 -------------------------------------------
-
 * Improve stability, fix crash caused by message statistics and log statistics
-
 版本 1.2.4.7
 -------------------------------------------
 * 提升稳定性，修复消息统计和日志记录触发的崩溃问题
 
- VERSION 1.2.4.6
+
+VERSION 1.2.4.6
 -------------------------------------------
 * Optimize SDK registration process and improve registration success rate
 * Optimize rich media push, support resources without suffix
@@ -71,18 +76,39 @@ VERSION 1.2.4.5
 * 优化累计设备量统计
 * 优化SDK I/O性能
 * 优化提升SDK稳定性
- 版本 1.2.4.4
+
+
+
+VERSION 1.2.4.4
+-------------------------------------------
+* Optimize the SDK registration process and improve the reach of notification messages
+
+版本 1.2.4.4
 -------------------------------------------
 * 优化SDK注册流程，提升通知消息触达
+
+
+VERSION 1.2.4.3
+-------------------------------------------
+* Optimize SDK compatibility
 
 版本 1.2.4.3
 -------------------------------------------
 * 优化提升SDK兼容性
 
+VERSION 1.2.4.2
+-------------------------------------------
+* fix a bug about obtaining the TPNS Token
 
 版本 1.2.4.2
 -------------------------------------------
 * 修复SDK获取TPNS Token的Bug
+
+VERSION 1.2.4.1
+-------------------------------------------
+* Add a log upload API
+* Optimize and improve SDK stability
+* Optimize SDK compatibility
 
 版本 1.2.4.1
 -------------------------------------------
@@ -98,6 +124,7 @@ VERSION 1.2.4.0
 * Optimize the cache logic for replacing App information
 * Improve SDK registration success rate
 
+
 版本 1.2.4.0
 -------------------------------------------
 * 修复单账号绑定回调的问题
@@ -106,10 +133,15 @@ VERSION 1.2.4.0
 * 优化更换App信息的缓存逻辑
 * 提升SDK注册成功率
 
+VERSION 1.2.3.0
+-------------------------------------------
+* Fix a bug about DeviceToken changed
+
 版本 1.2.3.0
 -------------------------------------------
 * 修复一个当设备Token变化时出现的bug
- 
+
+
 VERSION 1.2.2.1
 -------------------------------------------
 * Fix a bug about network connecting when other apis are called before SDK starting
@@ -117,6 +149,7 @@ VERSION 1.2.2.1
 版本 1.2.2.1
 -------------------------------------------
 * 修复一个当SDK未启动完成就调用其他接口而产生的网络连接的Bug
+
 
 VERSION 1.2.2.0
 -------------------------------------------
@@ -137,11 +170,43 @@ VERSION 1.2.1.2
 -------------------------------------------
 * 修复点击数据统计bug
 
-版本 1.2.1.1
+
+VERSION 1.2.1.1
 -------------------------------------------
 * 修复标签绑定接口在网络连接状态变化时存在的bug
 
-Version 1.2.1.1
+VERSION 1.2.1.0
 -------------------------------------------
-* Fix a bug of binding tag when the network status changed
+* 新增查询信鸽服务生成的Token接口
+* 修复单账号绑定失败的问题
 
+VERSION 1.2.0.0
+-------------------------------------------
+* 新增独立上报数据SDK
+* 优化终端注册服务
+* 更新DeviceToken解析逻辑
+
+VERSION 1.1.0.1
+-------------------------------------------
+* 修复用户名和密码认证逻辑
+* 修复动态加载SDK的缺陷
+
+VERSION 1.1.0.0
+-------------------------------------------
+* 增加PushKit插件
+* 优化SDK启动耗时
+
+
+VERSION 1.0.1.0
+-------------------------------------------
+* 增加长连接的推送
+
+
+ VERSION 1.0.1.0
+-------------------------------------------
+* 增加对PushKit的插件化支持，目前功能仅限注册，注销，上报
+
+
+ VERSION 1.0.0.0
+-------------------------------------------
+* 初始版本
