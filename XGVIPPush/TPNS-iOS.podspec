@@ -9,7 +9,7 @@
   spec.frameworks				= "CFNetwork", "SystemConfiguration", "CoreTelephony", "CoreGraphics", "Foundation", "UserNotifications", "CoreData"
   spec.libraries				= "z", "sqlite3"
   spec.source					= { :git => "https://git.code.tencent.com/tpns/XG-CocoaPods.git", :tag => spec.version }
-  spec.source_files				= "XGVIPPush/*.h"
+  spec.source_files				= "XGVIPPush/XGForFreeVersion.h","XGVIPPush/XGPush.h","XGVIPPush/XGPushPrivate.h"
   spec.vendored_libraries			= 'XGVIPPush/libXG-SDK-Cloud.a'
   spec.vendored_frameworks		        = 'XGVIPPush/XGMTACloud.framework'
 end
