@@ -1,12 +1,9 @@
 ﻿在线集成文档地址：https://cloud.tencent.com/document/product/548/36663。
 
-
-VERSION 1.2.5.3
+VERSION 1.2.5.4
 -------------------------------------------
-* Support unregistration tokens for free clusters to prevent repeated pushes.
-* Support replacing duplicate messages in notification extensions.
+* Improve stability, fix known issues caused by SDK
 
-版本 1.2.5.3
+版本 1.2.5.4
 -------------------------------------------
-* 支持对信鸽免费集群进行反注册token，防止重复推送。
-* 新增支持在通知扩展中对重复的消息进行替换。
+* 提升稳定性，修复已知问题
