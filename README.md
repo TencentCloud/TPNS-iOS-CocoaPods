@@ -1,4 +1,31 @@
-﻿TPNS iOS SDK ReleaseNote
+﻿TPNS iOS SDK 更新日志
+
+
+VERSION 1.2.7.2
+-------------------------------------------
+1. Added custom event reporting
+2. Increased the success rate of reporting  "arrivals"
+3. Fixed known issues
+
+版本 1.2.7.2
+-------------------------------------------
+1. 增加自定义事件上报功能
+2. 增加"抵达数"上报的成功率
+3. 修复已知问题
+
+VERSION 1.2.7.1
+-------------------------------------------
+1. Reduced SDK startup time
+2. Added new callback interface in case of registration failure
+3. Optimized account and label interface
+4. Fixed known issues
+
+版本 1.2.7.1
+-------------------------------------------
+1. 减少 SDK 启动耗时
+2. 新增注册失败的回调接口
+3. 优化账号、标签接口
+4. 修复已知问题
 
 VERSION 1.2.6.1
 -------------------------------------------
