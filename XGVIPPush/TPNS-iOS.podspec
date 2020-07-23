@@ -5,7 +5,7 @@
   spec.homepage					= "https://cloud.tencent.com/product/tpns/"
   spec.authors					= "tencent"
   spec.license					= "MIT"
-  spec.platform					= :ios, "7.0"
+  spec.platform					= :ios, "8.0"
   spec.frameworks				= "CFNetwork", "SystemConfiguration", "CoreTelephony", "CoreGraphics", "Foundation", "UserNotifications", "CoreData"
   spec.libraries				= "z", "sqlite3"
   spec.source					= { :git => "https://git.code.tencent.com/tpns/XG-CocoaPods.git", :tag => spec.version }
