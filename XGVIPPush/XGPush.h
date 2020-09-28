@@ -136,23 +136,23 @@
  */
 
 typedef NS_ENUM(NSUInteger, XGPushTokenAccountType) {
-    XGPushTokenAccountTypeUNKNOWN = (0),          // 未知类型，单账号绑定默认使用
-    XGPushTokenAccountTypeCUSTOM = (1),           // 自定义
-    XGPushTokenAccountTypeIDFA = (1001),          // 广告唯一标识 IDFA
-    XGPushTokenAccountTypePHONE_NUMBER = (1002),  //手机号码
-    XGPushTokenAccountTypeWX_OPEN_ID = (1003),    // 微信 OPENID
-    XGPushTokenAccountTypeQQ_OPEN_ID = (1004),    // QQ OPENID
-    XGPushTokenAccountTypeEMAIL = (1005),         // 邮箱
-    XGPushTokenAccountTypeSINA_WEIBO = (1006),    // 新浪微博
-    XGPushTokenAccountTypeALIPAY = (1007),        // 支付宝
-    XGPushTokenAccountTypeTAOBAO = (1008),        // 淘宝
-    XGPushTokenAccountTypeDOUBAN = (1009),        // 豆瓣
-    XGPushTokenAccountTypeFACEBOOK = (1010),      // FACEBOOK
-    XGPushTokenAccountTypeTWRITTER = (1011),      // TWRITTER
-    XGPushTokenAccountTypeGOOGLE = (1012),        // GOOGLE
-    XGPushTokenAccountTypeBAIDU = (1013),         // 百度
-    XGPushTokenAccountTypeJINGDONG = (1014),      // 京东
-    XGPushTokenAccountTypeLINKIN = (1015)         // LINKIN
+    XGPushTokenAccountTypeUNKNOWN = (0),         // 未知类型，单账号绑定默认使用
+    XGPushTokenAccountTypeCUSTOM = (1),          // 自定义
+    XGPushTokenAccountTypeIDFA = (1001),         // 广告唯一标识 IDFA
+    XGPushTokenAccountTypePHONE_NUMBER = (1002), //手机号码
+    XGPushTokenAccountTypeWX_OPEN_ID = (1003),   // 微信 OPENID
+    XGPushTokenAccountTypeQQ_OPEN_ID = (1004),   // QQ OPENID
+    XGPushTokenAccountTypeEMAIL = (1005),        // 邮箱
+    XGPushTokenAccountTypeSINA_WEIBO = (1006),   // 新浪微博
+    XGPushTokenAccountTypeALIPAY = (1007),       // 支付宝
+    XGPushTokenAccountTypeTAOBAO = (1008),       // 淘宝
+    XGPushTokenAccountTypeDOUBAN = (1009),       // 豆瓣
+    XGPushTokenAccountTypeFACEBOOK = (1010),     // FACEBOOK
+    XGPushTokenAccountTypeTWRITTER = (1011),     // TWRITTER
+    XGPushTokenAccountTypeGOOGLE = (1012),       // GOOGLE
+    XGPushTokenAccountTypeBAIDU = (1013),        // 百度
+    XGPushTokenAccountTypeJINGDONG = (1014),     // 京东
+    XGPushTokenAccountTypeLINKIN = (1015)        // LINKIN
 };
 
 #pragma mark - ********XGPush类，提供注册及反注册，设置角标等方法********
@@ -309,6 +309,107 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
 
 @optional
 
+#pragma mark - ********账号相关代理回调，TPNS SDK1.2.8.0+********
+/**
+ @brief 对应appendAccounts:的回调(TPNS SDK1.2.8.0+)
+
+ @param accounts 账号数组
+ @param error 绑定账号的结果信息
+ */
+- (void)xgPushDidAppendAccounts:(nonnull NSArray<NSDictionary *> *)accounts error:(nullable NSError *)error;
+
+/**
+ @brief 对应delAccounts:的回调(TPNS SDK1.2.8.0+)
+
+ @param accounts 账号数组
+ @param error 解绑账号的结果信息
+ */
+- (void)xgPushDidDelAccounts:(nonnull NSArray<NSDictionary *> *)accounts error:(nullable NSError *)error;
+
+/**
+ @brief 对应clearAccounts的回调(TPNS SDK1.2.8.0+)
+
+ @param error 清除账号的结果信息
+ */
+- (void)xgPushDidClearAccountsError:(nullable NSError *)error;
+
+/**
+ @brief 对应clearAndAppendAccounts:的回调(TPNS SDK1.2.8.0+)
+
+ @param accounts 账号数组
+ @param error 更新账号的结果信息
+ */
+- (void)xgPushDidClearAndAppendAccounts:(nonnull NSArray<NSDictionary *> *)accounts error:(nullable NSError *)error;
+
+#pragma mark - ********标签相关代理回调，TPNS SDK1.2.8.0+********
+
+/**
+ @brief 对应appendTags:的回调(TPNS SDK1.2.8.0+)
+
+ @param tags 标签数组
+ @param error 绑定标签的结果信息
+ */
+- (void)xgPushDidAppendTags:(nonnull NSArray<NSString *> *)tags error:(nullable NSError *)error;
+
+/**
+ @brief 对应delTags:的回调(TPNS SDK1.2.8.0+)
+
+ @param tags 标签数组
+ @param error 解绑标签的结果信息
+ */
+- (void)xgPushDidDelTags:(nonnull NSArray<NSString *> *)tags error:(nullable NSError *)error;
+
+/**
+ @brief 对应clearTags的回调(TPNS SDK1.2.8.0+)
+
+ @param error 清除标签的结果信息
+ */
+- (void)xgPushDidClearTagsError:(nullable NSError *)error;
+
+/**
+ @brief 对应clearAndAppendTags:的回调(TPNS SDK1.2.8.0+)
+
+ @param tags 标签数组
+ @param error 更新标签的结果信息
+ */
+- (void)xgPushDidClearAndAppendTags:(nonnull NSArray<NSString *> *)tags error:(nullable NSError *)error;
+
+#pragma mark - ********用户属性相关代理回调，个性化推送使用********
+/**
+ @brief 对应upsertAttributes:的回调(TPNS SDK1.2.8.0+)
+
+ @param attributes 用户属性
+ @param keys 无效用户属性键的数组, 未在管理台配置
+ @param error token对象绑定的结果信息
+ */
+- (void)xgPushDidUpsertAttributes:(nonnull NSDictionary *)attributes invalidKeys:(nullable NSArray *)keys error:(nullable NSError *)error;
+
+/**
+ @brief 对应delAttributes:的回调(TPNS SDK1.2.8.0+)
+ 
+ @param attributeKeys 用户属性key组成的集合
+ @param keys 无效用户属性键的数组, 未在管理台配置
+ @param error token对象解绑的结果信息
+ */
+- (void)xgPushDidDelAttributeKeys:(nonnull NSSet *)attributeKeys invalidKeys:(nullable NSArray *)keys error:(nullable NSError *)error;
+
+/**
+ @brief 对应clearAttributes的回调(TPNS SDK1.2.8.0+)
+
+ @param error token对象删除所有用户属性的结果信息
+ */
+- (void)xgPushDidClearAttributesWithError:(nullable NSError *)error;
+
+/**
+ @brief 对应clearAndAppendAttributes:的回调(TPNS SDK1.2.8.0+)
+
+ @param attributes 用户属性
+ @param keys 无效用户属性键的数组, 未在管理台配置
+ @param error token对象更新的结果信息
+ */
+- (void)xgPushDidClearAndAppendAttributes:(nonnull NSDictionary *)attributes invalidKeys:(nullable NSArray *)keys error:(nullable NSError *)error;
+
+#pragma mark - ********建议废弃的账号、标签相关代理回调********
 /**
  @brief 监控token对象绑定的情况
 
@@ -316,7 +417,8 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  @param type token对象绑定的类型
  @param error token对象绑定的结果信息
  */
-- (void)xgPushDidBindWithIdentifier:(nonnull NSString *)identifier type:(XGPushTokenBindType)type error:(nullable NSError *)error;
+- (void)xgPushDidBindWithIdentifier:(nonnull NSString *)identifier type:(XGPushTokenBindType)type error:(nullable NSError *)error
+__deprecated_msg("recommended to use appendAccounts: to add accounts,and delegete update to xgPushDidAppendAccounts:error:;use appendTags: to add tags, and delegete update to xgPushDidAppendTags:error:");
 
 /**
  @brief 监控token对象解绑的情况
@@ -325,42 +427,47 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  @param type token对象解绑的类型
  @param error token对象解绑的结果信息
  */
-- (void)xgPushDidUnbindWithIdentifier:(nonnull NSString *)identifier type:(XGPushTokenBindType)type error:(nullable NSError *)error;
+- (void)xgPushDidUnbindWithIdentifier:(nonnull NSString *)identifier type:(XGPushTokenBindType)type error:(nullable NSError *)error
+__deprecated_msg("recommended to use delAccounts: to delete accounts,and delegete update to xgPushDidDelAccounts:error:; use delTags: to delete tags, and delegete update to xgPushDidDelTags:error:");
 
 /**
  @brief 监控token对象identifiers绑定的情况
-
+ 
  @param identifiers token对象绑定的标识
  @param type token对象绑定的类型
  @param error token对象绑定的结果信息
  */
-- (void)xgPushDidBindWithIdentifiers:(nonnull NSArray *)identifiers type:(XGPushTokenBindType)type error:(nullable NSError *)error;
+- (void)xgPushDidBindWithIdentifiers:(nonnull NSArray *)identifiers type:(XGPushTokenBindType)type error:(nullable NSError *)error
+__deprecated_msg("recommended to use appendAccounts: to add accounts,and delegete update to xgPushDidAppendAccounts:error:;use appendTags: to add tags, and delegete update to xgPushDidAppendTags:error:");
 
 /**
  @brief 监控token对象identifiers解绑的情况
-
+ 
  @param identifiers token对象解绑的标识
  @param type token对象解绑的类型
  @param error token对象解绑的结果信息
  */
-- (void)xgPushDidUnbindWithIdentifiers:(nonnull NSArray *)identifiers type:(XGPushTokenBindType)type error:(nullable NSError *)error;
+- (void)xgPushDidUnbindWithIdentifiers:(nonnull NSArray *)identifiers type:(XGPushTokenBindType)type error:(nullable NSError *)error
+__deprecated_msg("recommended to use delAccounts: to delete accounts,and delegete update to xgPushDidDelAccounts:error:; use delTags: to delete tags, and delegete update to xgPushDidDelTags:error:");
 
 /**
  @brief 监控token对象更新已绑定标识的情况
-
+ 
  @param identifiers token对象更新后的标识
  @param type token对象更新类型
  @param error token对象更新标识的结果信息
  */
-- (void)xgPushDidUpdatedBindedIdentifiers:(nonnull NSArray *)identifiers bindType:(XGPushTokenBindType)type error:(nullable NSError *)error;
+- (void)xgPushDidUpdatedBindedIdentifiers:(nonnull NSArray *)identifiers bindType:(XGPushTokenBindType)type error:(nullable NSError *)error
+__deprecated_msg("recommended to use clearAndAppendAccounts: to clear and append accounts,and delegete update to xgPushDidClearAndAppendAccounts:error:; use clearAndAppendTags: to clear and append tags, and delegete update to xgPushDidClearAndAppendTags:error:");
 
 /**
  @brief 监控清除token对象绑定标识的情况
-
+ 
  @param type token对象清除的类型
  @param error token对象清除标识的结果信息
  */
-- (void)xgPushDidClearAllIdentifiers:(XGPushTokenBindType)type error:(nullable NSError *)error;
+- (void)xgPushDidClearAllIdentifiers:(XGPushTokenBindType)type error:(nullable NSError *)error
+__deprecated_msg("recommended to use clearAccounts to clear accounts,and delegete update to xgPushDidClearAccountsError:; use clearTags to clear tags, and delegete update to xgPushDidClearTagsError:");
 
 @end
 
@@ -393,6 +500,132 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  */
 @property (copy, nonatomic, nullable, readonly) NSString *xgTokenString;
 
+#pragma mark - ********账号相关方法，TPNS SDK1.2.8.0+********
+
+/**
+ @brief 添加账号(TPNS SDK1.2.8.0+)
+
+ @param accounts 账号数组
+ @note 账号类型和账号名称一起作为联合主键
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note 对于账号操作，需要使用字典数组且key是固定要求，Objective-C的写法 : @[@{@"accountType":@(0),@"account":identifier}]；
+ Swift的写法：[["accountType":NSNumber(0),"account":identifier]]
+ */
+- (void)appendAccounts:(nonnull NSArray<NSDictionary *> *)accounts;
+
+/**
+ @brief 删除账号(TPNS SDK1.2.8.0+)
+
+ @param accounts 账号数组
+ @note 对于账号操作，需要使用字典数组且key是固定要求，Objective-C的写法 : @[@{@"accountType":@(0),@"account":identifier}]；
+ Swift的写法：[["accountType":NSNumber(0),"account":identifier]]
+ */
+- (void)delAccounts:(nonnull NSArray<NSDictionary *> *)accounts;
+
+/**
+ @brief 清空已有账号(TPNS SDK1.2.8.0+)
+
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ */
+- (void)clearAccounts;
+
+/**
+ @brief 清空已有账号，然后批量添加账号(TPNS SDK1.2.8.0+)
+
+ @param accounts 账号数组
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note 对于账号操作，需要使用字典数组且key是固定要求，Objective-C的写法 : @[@{@"accountType":@(0),@"account":identifier}]；
+ Swift的写法：[["accountType":NSNumber(0),"account":identifier]]
+ */
+- (void)clearAndAppendAccounts:(nonnull NSArray<NSDictionary *> *)accounts;
+
+#pragma mark - ********标签相关方法，TPNS SDK1.2.8.0+********
+/**
+ @brief 添加标签((TPNS SDK1.2.8.0+)
+
+ @param tags 标签数组
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note tags为标签字符串数组(标签字符串不允许有空格或者是tab字符)
+ */
+- (void)appendTags:(nonnull NSArray<NSString *> *)tags;
+
+/**
+ @brief 删除标签(TPNS SDK1.2.8.0+)
+
+ @param tags 指定解绑标识，标签字符串不允许有空格或者是tab字符
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用；若需要清除所有标识，建议使用 clearAllIdentifiers:；
+ @note 对于标签操作identifiers为标签字符串数组(标签字符串不允许有空格或者是tab字符)
+ */
+- (void)delTags:(nonnull NSArray<NSString *> *)tags;
+
+/**
+ @brief 清空已有标签(TPNS SDK1.2.8.0+)
+
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ */
+- (void)clearTags;
+
+/**
+ @brief 清空已有标签，然后批量添加标签(TPNS SDK1.2.8.0+)
+
+ @param tags 标签标识字符串数组，标签字符串不允许有空格或者是tab字符
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note 标签字符串不允许有空格或者是tab字符
+ */
+- (void)clearAndAppendTags:(nonnull NSArray<NSString *> *)tags;
+
+
+#pragma mark - ********用户属性相关方法，个性化推送使用********
+/**
+ @brief  添加或更新用户属性( key-value结构，若原来没有该key的用户属性value，则新增; 若原来有该key的用户属性value,则更新该value)(TPNS SDK1.2.8.0+)
+
+ @param attributes 用户属性字符串字典，字符串不允许有空格或者是tab字符
+ @note 需要先在管理台配置用户属性的键,才能操作成功
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note 字符串不允许有空格或者是tab字符
+ @note 使用字典且key是固定要求，Objective-C的写法 : @{@"gender": @"Female", @"age": @"29"}；Swift的写法：["gender":"Female", "age": "29"]
+ */
+- (void)upsertAttributes:(nonnull NSDictionary<NSString *,NSString *> *)attributes;
+/**
+ @brief 删除用户属性(TPNS SDK1.2.8.0+)
+
+@param attributeKeys 用户属性key组成的集合
+
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note 需要先在管理台配置用户属性的键,才能操作成功
+ @note 字符串不允许有空格或者是tab字符
+ @note 使用集合且key是固定要求
+ */
+- (void)delAttributes:(nonnull NSSet<NSString *> *)attributeKeys;
+
+/**
+ @brief 清空已有用户属性(TPNS SDK1.2.8.0+)
+
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ */
+- (void)clearAttributes;
+
+/**
+ @brief 清空已有用户属性，然后批量添加用户属性(TPNS SDK1.2.8.0+)
+
+ @param attributes 用户属性字符串字典，字符串不允许有空格或者是tab字符
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note 需要先在管理台配置用户属性的键,才能操作成功
+ @note 字符串不允许有空格或者是tab字符
+ @note 使用字典且key是固定要求，Objective-C的写法 : @{@"gender": @"Female", @"age": @"29"}；Swift的写法：["gender":"Female", "age": "29"]
+ */
+- (void)clearAndAppendAttributes:(nonnull NSDictionary<NSString *,NSString *> *)attributes;
+
+#pragma mark - ********数据分析相关，需要集成XGMTACloud.framework********
+/**
+@brief 自定义事件上报
+
+@param eventID 事件ID
+@param kvs 键值对，例如@{@"para1": @"value1" }
+*/
+- (void)trackCustomKeyValueEvent:(nonnull NSString *)eventID kvs:(nullable NSDictionary *)kvs;
+
+#pragma mark - ********建议废弃的账号、标签相关方法********
 /**
  @brief 为token对象设置绑定类型和标识
 
@@ -402,7 +635,7 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  @note 对于标签操作，标签字符串不允许有空格或者是tab字符
  */
 - (void)bindWithIdentifier:(nonnull NSString *)identifier
-                      type:(XGPushTokenBindType)type __deprecated_msg("recommended to use bindWithIdentifiers:type:");
+                      type:(XGPushTokenBindType)type __deprecated_msg("recommended to use appendAccounts: or appendTags:");
 
 /**
  @brief 根据类型和标识为token对象解绑
@@ -413,7 +646,7 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  @note 对于标签操作，标签字符串不允许有空格或者是tab字符
  */
 - (void)unbindWithIdentifer:(nonnull NSString *)identifier
-                       type:(XGPushTokenBindType)type __deprecated_msg("recommended to use unbindWithIdentifers:type:");
+                       type:(XGPushTokenBindType)type __deprecated_msg("recommended to use delAccounts: or delTags:");
 
 /**
  @brief 根据指定类型查询当前token对象绑定的标识
@@ -421,7 +654,8 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  @param type 指定绑定类型
  @return 当前token对象绑定的标识
  */
-- (nullable NSArray *)identifiersWithType:(XGPushTokenBindType)type;
+- (nullable NSArray<NSString *> *)identifiersWithType:(XGPushTokenBindType)type
+__deprecated_msg("accounts and tags of history query are no longer supported by TPNS SDK. recommended to use RestAPI or saves it by yourself.");
 
 /**
  @brief 为token对象设置绑定类型和标识
@@ -431,10 +665,11 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
  @note 对于标签操作identifiers为标签字符串数组(标签字符串不允许有空格或者是tab字符)
  @note 对于账号操作，需要使用字典数组且key是固定要求，Objective-C的写法 : @[@{@"account":identifier, @"accountType":@(0)}]；
- Swift的写法：["account":identifier, "accountType":NSNumber(0)]
+ Swift的写法：[["account":identifier, "accountType":NSNumber(0)]]
  @note 更多 accountType 请参照 XGPushTokenAccountType 枚举
  */
-- (void)bindWithIdentifiers:(nonnull NSArray *)identifiers type:(XGPushTokenBindType)type;
+- (void)bindWithIdentifiers:(nonnull NSArray *)identifiers
+                       type:(XGPushTokenBindType)type __deprecated_msg("recommended to use appendAccounts: or appendTags:");
 
 /**
  @brief 根据类型和标识为token对象解绑
@@ -444,10 +679,11 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用；若需要清除所有标识，建议使用 clearAllIdentifiers:；
  @note 对于标签操作identifiers为标签字符串数组(标签字符串不允许有空格或者是tab字符)
  @note 对于账号操作，需要使用字典数组且key是固定要求，Objective-C的写法 : @[@{@"account":identifier, @"accountType":@(0)}]；
- Swift的写法：["account":identifier, "accountType":NSNumber(0)]
+ Swift的写法：[["account":identifier, "accountType":NSNumber(0)]]
  @note 更多 accountType 请参照 XGPushTokenAccountType 枚举
  */
-- (void)unbindWithIdentifers:(nonnull NSArray *)identifiers type:(XGPushTokenBindType)type;
+- (void)unbindWithIdentifers:(nonnull NSArray *)identifiers
+                        type:(XGPushTokenBindType)type __deprecated_msg("recommended to use delAccounts: or delTags:");
 
 /**
  @brief 根据类型，覆盖原有的标识；若之前没有绑定标识，则会执行新增标识
@@ -457,28 +693,18 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
  @note 对于标签操作，标签字符串不允许有空格或者是tab字符
  @note 对于账号操作，需要使用字典数组且key是固定要求，Objective-C的写法 : @[@{@"account":identifier, @"accountType":@(0)}]；
- Swift的写法：["account":identifier, "accountType":NSNumber(0)]
+ Swift的写法：[["account":identifier, "accountType":NSNumber(0)]]
  @note 更多 accountType 请参照 XGPushTokenAccountType 枚举
  */
-- (void)updateBindedIdentifiers:(nonnull NSArray *)identifiers bindType:(XGPushTokenBindType)type;
+- (void)updateBindedIdentifiers:(nonnull NSArray *)identifiers
+                       bindType:(XGPushTokenBindType)type __deprecated_msg("recommended to use clearAndAppendAccounts: or clearAndAppendTags:");
 
 /**
- @brief 根据标识类型，清除所有标识
+ @brief 清除所有用户属性
 
- @param type 标识类型
- @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
- */
-- (void)clearAllIdentifiers:(XGPushTokenBindType)type;
-
-
-#pragma mark - ********数据分析相关，需要集成XGMTACloud.framework********
-/**
-@brief 自定义事件上报
-
-@param eventID 事件ID
-@param kvs 键值对，例如@{ @"para1": @"value1" }
-*/
-- (void)trackCustomKeyValueEvent:(nonnull NSString *)eventID kvs:(nullable NSDictionary *)kvs;
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ */
+- (void)clearAllIdentifiers:(XGPushTokenBindType)type __deprecated_msg("recommended to use clearAccounts or clearTags");
 
 @end
 
