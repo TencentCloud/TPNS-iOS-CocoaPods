@@ -9,7 +9,6 @@
 #ifndef TPNSInAppMessageActionProtocol_h
 #define TPNSInAppMessageActionProtocol_h
 
-
 #endif /* TPNSInAppMessageActionProtocol_h */
 
 #import <Foundation/Foundation.h>

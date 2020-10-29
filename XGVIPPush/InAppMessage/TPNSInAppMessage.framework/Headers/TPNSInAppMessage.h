@@ -16,5 +16,5 @@ FOUNDATION_EXPORT const unsigned char TPNSInAppMessageVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <TPNSInAppMessage/PublicHeader.h>
 
-#import "TPNSInAppMessageManager.h"
 #import "TPNSInAppMessageActionProtocol.h"
+#import "TPNSInAppMessageManager.h"

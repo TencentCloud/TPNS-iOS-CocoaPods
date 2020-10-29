@@ -2,6 +2,13 @@
 
 TPNS iOS SDK ReleaseNote
 
+VERSION 1.2.8.1
+-------------------------------------------
+1. 修复已知问题
+
+版本 1.2.8.1
+-------------------------------------------
+1. Fixed known issues
 VERSION 1.2.8.0
 -------------------------------------------
 1. Added  "user attributes"  for personalized push
