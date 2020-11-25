@@ -10,7 +10,7 @@
 #import <UserNotifications/UserNotifications.h>
 
 #if TARGET_OS_IPHONE
-#define kExtensionSDKVersion @"1.2.8.1"
+#define kExtensionSDKVersion @"1.2.9.0"
 #elif TARGET_OS_MAC
 #define kExtensionSDKVersion @"1.0.4.0"
 #endif
