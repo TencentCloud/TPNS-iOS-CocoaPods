@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 /// 通知内容类
-@interface XGNotificationContent : NSObject<NSCopying>
+@interface XGNotificationContent : NSObject <NSCopying>
 
 /// 通知标题
 @property (nonatomic, copy) NSString *title;
@@ -37,7 +37,7 @@
 @end
 
 /// 通知触发类
-@interface XGNotificationTrigger : NSObject<NSCopying>
+@interface XGNotificationTrigger : NSObject <NSCopying>
 
 /// 是否重复，默认值NO
 @property (nonatomic, assign) BOOL repeats;
@@ -52,7 +52,7 @@
 @end
 
 /// 通知管理类
-@interface XGNotificationRequest : NSObject<NSCopying>
+@interface XGNotificationRequest : NSObject <NSCopying>
 
 /// 通知请求标识，移除通知会用到此标识
 @property (nonatomic, copy) NSString *requestIdentifier;
@@ -83,5 +83,3 @@
 + (void)removeAllPendingLocalNotifications;
 
 @end
-
-

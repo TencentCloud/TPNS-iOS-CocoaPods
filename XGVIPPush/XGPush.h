@@ -129,32 +129,6 @@
 
 @end
 
-#pragma mark - ********账号类型枚举，用于账号操作时区分账号类型********
-
-/**
-  @brief 账号类型，用以细分账号类别
- */
-
-typedef NS_ENUM(NSUInteger, XGPushTokenAccountType) {
-    XGPushTokenAccountTypeUNKNOWN = (0),         // 未知类型，单账号绑定默认使用
-    XGPushTokenAccountTypeCUSTOM = (1),          // 自定义
-    XGPushTokenAccountTypeIDFA = (1001),         // 广告唯一标识 IDFA
-    XGPushTokenAccountTypePHONE_NUMBER = (1002), // 手机号码
-    XGPushTokenAccountTypeWX_OPEN_ID = (1003),   // 微信 OPENID
-    XGPushTokenAccountTypeQQ_OPEN_ID = (1004),   // QQ OPENID
-    XGPushTokenAccountTypeEMAIL = (1005),        // 邮箱
-    XGPushTokenAccountTypeSINA_WEIBO = (1006),   // 新浪微博
-    XGPushTokenAccountTypeALIPAY = (1007),       // 支付宝
-    XGPushTokenAccountTypeTAOBAO = (1008),       // 淘宝
-    XGPushTokenAccountTypeDOUBAN = (1009),       // 豆瓣
-    XGPushTokenAccountTypeFACEBOOK = (1010),     // FACEBOOK
-    XGPushTokenAccountTypeTWITTER = (1011),      // TWITTER
-    XGPushTokenAccountTypeGOOGLE = (1012),       // GOOGLE
-    XGPushTokenAccountTypeBAIDU = (1013),        // 百度
-    XGPushTokenAccountTypeJINGDONG = (1014),     // 京东
-    XGPushTokenAccountTypeLINKEDIN = (1015)      // LINKEDIN
-};
-
 #pragma mark - ********XGPush类，提供注册及反注册，设置角标等方法********
 
 @class XGNotificationConfigure;
@@ -320,14 +294,6 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  */
 - (void)xgPushDidClearAccountsError:(nullable NSError *)error;
 
-/**
- @brief 对应clearAndAppendAccounts:的回调(TPNS SDK1.2.9.0+)
-
- @param accountsDict 账号数组
- @param error 更新账号的结果信息
- */
-- (void)xgPushDidClearAndAppendAccountsByDict:(nonnull NSDictionary *)accountsDict error:(nullable NSError *)error;
-
 #pragma mark - ********标签相关代理回调，TPNS SDK1.2.8.0+********
 
 /**
@@ -399,13 +365,23 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
 #pragma mark - ********建议废弃的账号、标签相关代理回调********
 
 /**
+ @brief 对应clearAndAppendAccounts:的回调(TPNS SDK1.2.9.0+)
+
+ @param accountsDict 账号数组
+ @param error 更新账号的结果信息
+ */
+- (void)xgPushDidClearAndAppendAccountsByDict:(nonnull NSDictionary *)accountsDict error:(nullable NSError *)error
+    __deprecated_msg("recommended to use upsertAccountsByDict: to add accounts,and delegete update to xgPushDidUpsertAccountsByDict:error:");
+
+/**
  @brief 对应appendAccounts:的回调(TPNS SDK1.2.8.0+)
 
  @param accounts 账号数组
  @param error 绑定账号的结果信息
  */
-- (void)xgPushDidAppendAccounts:(nonnull NSArray<NSDictionary *> *)accounts error:(nullable NSError *)error
-__deprecated_msg("recommended to use upsertAccountsByDict: to add accounts,and delegete update to xgPushDidUpsertAccountsByDict:error:");
+- (void)xgPushDidAppendAccounts:(nonnull NSArray<NSDictionary *> *)accounts
+                          error:(nullable NSError *)error
+    __deprecated_msg("recommended to use upsertAccountsByDict: to add accounts,and delegete update to xgPushDidUpsertAccountsByDict:error:");
 
 /**
  @brief 对应delAccounts:的回调(TPNS SDK1.2.8.0+)
@@ -413,8 +389,9 @@ __deprecated_msg("recommended to use upsertAccountsByDict: to add accounts,and d
  @param accounts 账号数组
  @param error 解绑账号的结果信息
  */
-- (void)xgPushDidDelAccounts:(nonnull NSArray<NSDictionary *> *)accounts error:(nullable NSError *)error
-__deprecated_msg("recommended to use delAccountsByKeys: to add accounts,and delegete update to xgPushDidDelAccountsByKeys:error:");
+- (void)xgPushDidDelAccounts:(nonnull NSArray<NSDictionary *> *)accounts
+                       error:(nullable NSError *)error
+    __deprecated_msg("recommended to use delAccountsByKeys: to add accounts,and delegete update to xgPushDidDelAccountsByKeys:error:");
 
 /**
  @brief 对应clearAndAppendAccounts:的回调(TPNS SDK1.2.8.0+)
@@ -422,8 +399,10 @@ __deprecated_msg("recommended to use delAccountsByKeys: to add accounts,and dele
  @param accounts 账号数组
  @param error 更新账号的结果信息
  */
-- (void)xgPushDidClearAndAppendAccounts:(nonnull NSArray<NSDictionary *> *)accounts error:(nullable NSError *)error
-__deprecated_msg("recommended to use clearAndAppendAccountsByDict: to add accounts,and delegete update to xgPushDidclearAndAppendAccountsByDict:error:");
+- (void)xgPushDidClearAndAppendAccounts:(nonnull NSArray<NSDictionary *> *)accounts
+                                  error:(nullable NSError *)error
+    __deprecated_msg(
+        "recommended to use upsertAccountsByDict: to add accounts,and delegete update to xgPushDidUpsertAccountsByDict:error:");
 
 /**
  @brief 监控token对象绑定的情况
@@ -435,8 +414,9 @@ __deprecated_msg("recommended to use clearAndAppendAccountsByDict: to add accoun
 - (void)xgPushDidBindWithIdentifier:(nonnull NSString *)identifier
                                type:(XGPushTokenBindType)type
                               error:(nullable NSError *)error
-    __deprecated_msg("recommended to use upsertAccountsByDict: to add accounts,and delegete update to xgPushDidUpsertAccountsByDict:error:;use appendTags: to "
-                     "add tags, and delegete update to xgPushDidAppendTags:error:");
+    __deprecated_msg(
+        "recommended to use upsertAccountsByDict: to add accounts,and delegete update to xgPushDidUpsertAccountsByDict:error:;use appendTags: to "
+        "add tags, and delegete update to xgPushDidAppendTags:error:");
 
 /**
  @brief 监控token对象解绑的情况
@@ -461,7 +441,7 @@ __deprecated_msg("recommended to use clearAndAppendAccountsByDict: to add accoun
 - (void)xgPushDidBindWithIdentifiers:(nonnull NSArray *)identifiers
                                 type:(XGPushTokenBindType)type
                                error:(nullable NSError *)error
-    __deprecated_msg("recommended to use appendAccounts: to add accounts,and delegete update to xgPushDidAppendAccounts:error:;use appendTags: to "
+    __deprecated_msg("recommended to use upsertAccountsByDict: to add accounts,and delegete update to xgPushDidUpsertAccountsByDict:error:;use appendTags: to "
                      "add tags, and delegete update to xgPushDidAppendTags:error:");
 
 /**
@@ -488,7 +468,7 @@ __deprecated_msg("recommended to use clearAndAppendAccountsByDict: to add accoun
                                  bindType:(XGPushTokenBindType)type
                                     error:(nullable NSError *)error
     __deprecated_msg(
-        "recommended to use clearAndAppendAccounts: to clear and append accounts,and delegete update to xgPushDidClearAndAppendAccounts:error:; use "
+        "recommended to use upsertAccountsByDict: to add accounts,and delegete update to xgPushDidUpsertAccountsByDict:error:; use "
         "clearAndAppendTags: to clear and append tags, and delegete update to xgPushDidClearAndAppendTags:error:");
 
 /**
@@ -545,7 +525,6 @@ __deprecated_msg("recommended to use clearAndAppendAccountsByDict: to add accoun
  @note 需要使用字典类型，key为账号类型，value为账号，示例：@{@(accountType):@"account"}；
  Objective-C的写法 : @{@(0):@"account0",@(1):@"account1"}；
  Swift的写法：[NSNumber(0):@"account0",NSNumber(1):@"account1"]
- @note 更多 accountType 请参照 XGPushTokenAccountType 枚举
  */
 - (void)upsertAccountsByDict:(nonnull NSDictionary<NSNumber *, NSString *> *)accountsDict;
 
@@ -556,7 +535,6 @@ __deprecated_msg("recommended to use clearAndAppendAccountsByDict: to add accoun
  @note 删除指定账号类型下的所有账号
  @note 使用集合且key是固定要求
  @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
- @note 更多 accountsKeys 请参照 XGPushTokenAccountType 枚举
  */
 - (void)delAccountsByKeys:(nonnull NSSet<NSNumber *> *)accountsKeys;
 
@@ -566,18 +544,6 @@ __deprecated_msg("recommended to use clearAndAppendAccountsByDict: to add accoun
  @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
  */
 - (void)clearAccounts;
-
-/**
- @brief 清空已有账号，然后批量添加账号(TPNS SDK1.2.9.0+)
-
- @param accountsDict 账号字典
- @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
- @note 需要使用字典类型，key为账号类型，value为账号，示例：@{@(accountType):@"account"}；
- Objective-C的写法 : @{@(0):@"account0",@(1):@"account1"}；
- Swift的写法：[NSNumber(0):@"account0",NSNumber(1):@"account1"]
- @note 更多 accountType 请参照 XGPushTokenAccountType 枚举
- */
-- (void)clearAndAppendAccountsByDict:(nonnull NSDictionary<NSNumber *, NSString *> *)accountsDict;
 
 #pragma mark - ********标签相关方法，TPNS SDK1.2.8.0+********
 /**
@@ -836,7 +802,7 @@ typedef NS_OPTIONS(NSUInteger, XGUserNotificationTypes) {
 /**
  @brief 管理TPNS服务的对象，负责注册推送权限、消息的管理、调试模式的开关设置等
  */
-@interface XGPush(Deprecated)
+@interface XGPush (Deprecated)
 
 /**
  @brief 通过使用在TPNS官网注册的应用的信息，启动TPNS服务
@@ -867,7 +833,7 @@ typedef NS_OPTIONS(NSUInteger, XGUserNotificationTypes) {
 
 #pragma mark - ********XGPushTokenManager，提供账号和标签的绑定与解绑操作，Deprecated********
 
-@interface XGPushTokenManager(Deprecated)
+@interface XGPushTokenManager (Deprecated)
 
 /**
  @brief 创建设备token的管理对象，用来管理token的绑定与解绑操作
@@ -879,6 +845,18 @@ typedef NS_OPTIONS(NSUInteger, XGUserNotificationTypes) {
 #pragma mark - ********建议废弃的账号、标签相关方法********
 
 /**
+ @brief 清空已有账号，然后批量添加账号(TPNS SDK1.2.9.0+)
+
+ @param accountsDict 账号字典
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note 需要使用字典类型，key为账号类型，value为账号，示例：@{@(accountType):@"account"}；
+ Objective-C的写法 : @{@(0):@"account0",@(1):@"account1"}；
+ Swift的写法：[NSNumber(0):@"account0",NSNumber(1):@"account1"]
+ */
+- (void)clearAndAppendAccountsByDict:(nonnull NSDictionary<NSNumber *, NSString *> *)accountsDict
+    __deprecated_msg("recommended to use upsertAccountsByDict:");
+
+/**
  @brief 添加账号(TPNS SDK1.2.8.0+)
 
  @param accounts 账号数组
@@ -886,7 +864,6 @@ typedef NS_OPTIONS(NSUInteger, XGUserNotificationTypes) {
  @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
  @note 对于账号操作，需要使用字典数组且key是固定要求，Objective-C的写法 : @[@{@"accountType":@(0),@"account":identifier}]；
  Swift的写法：[["accountType":NSNumber(0),"account":identifier]]
- @note 更多 accountType 请参照 XGPushTokenAccountType 枚举
  */
 - (void)appendAccounts:(nonnull NSArray<NSDictionary *> *)accounts __deprecated_msg("recommended to use upsertAccountsByDict:");
 
@@ -896,10 +873,8 @@ typedef NS_OPTIONS(NSUInteger, XGUserNotificationTypes) {
  @param accounts 账号数组
  @note 对于账号操作，需要使用字典数组且key是固定要求，Objective-C的写法 : @[@{@"accountType":@(0),@"account":identifier}]；
  Swift的写法：[["accountType":NSNumber(0),"account":identifier]]
- @note 更多 accountType 请参照 XGPushTokenAccountType 枚举
  */
-- (void)delAccounts:(nonnull NSArray<NSDictionary *> *)accounts
-__deprecated_msg("recommended to use delAccountsByKeys:");
+- (void)delAccounts:(nonnull NSArray<NSDictionary *> *)accounts __deprecated_msg("recommended to use delAccountsByKeys:");
 
 /**
  @brief 清空已有账号，然后批量添加账号(TPNS SDK1.2.8.0+)
@@ -908,10 +883,8 @@ __deprecated_msg("recommended to use delAccountsByKeys:");
  @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
  @note 对于账号操作，需要使用字典数组且key是固定要求，Objective-C的写法 : @[@{@"accountType":@(0),@"account":identifier}]；
  Swift的写法：[["accountType":NSNumber(0),"account":identifier]]
- @note 更多 accountType 请参照 XGPushTokenAccountType 枚举
  */
-- (void)clearAndAppendAccounts:(nonnull NSArray<NSDictionary *> *)accounts
-__deprecated_msg("recommended to use clearAndAppendAccountsByDict:");
+- (void)clearAndAppendAccounts:(nonnull NSArray<NSDictionary *> *)accounts __deprecated_msg("recommended to use upsertAccountsByDict:");
 
 /**
  @brief 为token对象设置绑定类型和标识
@@ -936,15 +909,6 @@ __deprecated_msg("recommended to use clearAndAppendAccountsByDict:");
                        type:(XGPushTokenBindType)type __deprecated_msg("recommended to use delAccounts: or delTags:");
 
 /**
- @brief 根据指定类型查询当前token对象绑定的标识
-
- @param type 指定绑定类型
- @return 当前token对象绑定的标识
- */
-- (nullable NSArray<NSString *> *)identifiersWithType:(XGPushTokenBindType)type
-    __deprecated_msg("accounts and tags of history query are no longer supported by TPNS SDK. recommended to use RestAPI or saves it by yourself.");
-
-/**
  @brief 为token对象设置绑定类型和标识
 
  @param identifiers 指定绑定标识，标签字符串不允许有空格或者是tab字符
@@ -953,10 +917,9 @@ __deprecated_msg("recommended to use clearAndAppendAccountsByDict:");
  @note 对于标签操作identifiers为标签字符串数组(标签字符串不允许有空格或者是tab字符)
  @note 对于账号操作，需要使用字典数组且key是固定要求，Objective-C的写法 : @[@{@"account":identifier, @"accountType":@(0)}]；
  Swift的写法：[["account":identifier, "accountType":NSNumber(0)]]
- @note 更多 accountType 请参照 XGPushTokenAccountType 枚举
  */
 - (void)bindWithIdentifiers:(nonnull NSArray *)identifiers
-                       type:(XGPushTokenBindType)type __deprecated_msg("recommended to use appendAccounts: or appendTags:");
+                       type:(XGPushTokenBindType)type __deprecated_msg("recommended to use upsertAccountsByDict: or appendTags:");
 
 /**
  @brief 根据类型和标识为token对象解绑
@@ -967,7 +930,6 @@ __deprecated_msg("recommended to use clearAndAppendAccountsByDict:");
  @note 对于标签操作identifiers为标签字符串数组(标签字符串不允许有空格或者是tab字符)
  @note 对于账号操作，需要使用字典数组且key是固定要求，Objective-C的写法 : @[@{@"account":identifier, @"accountType":@(0)}]；
  Swift的写法：[["account":identifier, "accountType":NSNumber(0)]]
- @note 更多 accountType 请参照 XGPushTokenAccountType 枚举
  */
 - (void)unbindWithIdentifers:(nonnull NSArray *)identifiers
                         type:(XGPushTokenBindType)type __deprecated_msg("recommended to use delAccounts: or delTags:");
@@ -981,10 +943,9 @@ __deprecated_msg("recommended to use clearAndAppendAccountsByDict:");
  @note 对于标签操作，标签字符串不允许有空格或者是tab字符
  @note 对于账号操作，需要使用字典数组且key是固定要求，Objective-C的写法 : @[@{@"account":identifier, @"accountType":@(0)}]；
  Swift的写法：[["account":identifier, "accountType":NSNumber(0)]]
- @note 更多 accountType 请参照 XGPushTokenAccountType 枚举
  */
 - (void)updateBindedIdentifiers:(nonnull NSArray *)identifiers
-                       bindType:(XGPushTokenBindType)type __deprecated_msg("recommended to use clearAndAppendAccounts: or clearAndAppendTags:");
+                       bindType:(XGPushTokenBindType)type __deprecated_msg("recommended to use upsertAccountsByDict: or clearAndAppendTags:");
 
 /**
  @brief 清除所有用户属性
@@ -992,6 +953,5 @@ __deprecated_msg("recommended to use clearAndAppendAccountsByDict:");
  @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
  */
 - (void)clearAllIdentifiers:(XGPushTokenBindType)type __deprecated_msg("recommended to use clearAccounts or clearTags");
-
 
 @end
