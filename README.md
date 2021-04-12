@@ -2,6 +2,59 @@
 
 TPNS iOS SDK ReleaseNote
 
+版本 1.3.1.0
+-------------------------------------------
+1. 修复：TPNS自建通道和APNs通道的播放声音规则不一致问题。
+2. 修复：切换集群时，云控下发加密字段失效的问题。
+3. 修复：偶现的统计日志上报失败问题。
+4. 修复：覆盖消息功能，带thread-id的通知可能覆盖失败的问题。
+5. 优化：部分错误日志的提示文案。
+6. 优化：提高终端对TPNS Token的环境校验的准确性。
+7. 优化：自动补发在TPNS网络连接失败时设置的角标数。
+8. 优化："静默消息"的抵达上报更及时。
+9. 增加：查询标签功能。
+10. 增加：申请通知权限的回调。
+11. 增加：TPNS通道支持thread_id消息分组。
+12. 增加：Demo新增全球集群切换的示例代码。
+13. 增加：TPNS网络连接的建连成功和断开回调。
+
+VERSION 1.3.1.0
+-------------------------------------------
+1. FIX：Inconsistent rules of playing sound between TPNS channel and APNs channel.
+2. FIX：Invalid Encrypted Info delivered by Cloud Control when we change cluster.
+3. FIX：Occasional statistical log report failure problem.
+4. FIX：Override message function, notification with thread-id may override failed issue.
+5. IMPROVEMENT：Some error log tips.
+6. IMPROVEMENT：Check TPNS Token environment more accurately
+7. IMPROVEMENT：Automatically resend the badge number failed to set that caused by TPNS network issues.
+8. IMPROVEMENT：The arrival of "silent push notification" is reported more promptly
+9. NEW FEATURE：Query tags.
+10. NEW FEATURE：Callback for request notification permission.
+11. NEW FEATURE：TPNS channel supports thread_id message grouping.
+12. NEW FEATURE：Add sample code for global cluster switching in demo app.
+13. NEW FEATURE：Connected and disconnected callbacks for TPNS network connections.
+
+版本 1.3.0.0
+-------------------------------------------
+1. 修复：多线程时和低内存下的小概率crash的问题
+2. 优化：减少不必要的MQTT网络超时检测
+3. 优化："抵达"的上报支持更高性能的方式
+4. 优化：减少"应用内消息"插件包体积
+5. 优化：对获取TPNS token的请求进行加密
+6. 增加：账号、标签、用户属性接口的参数检查逻辑和错误回调
+7. 删除：账号类型枚举，由业务自己定义
+
+VERSION 1.3.0.0
+-------------------------------------------
+1.  FIX：Small probability of crash under multithreading or low memory
+2.  IMPROVEMENT：Reduce the count of detection for unnecessary MQTT network timeout
+3.  IMPROVEMENT：Take a higher performance approach for the "arrival" report
+4.  IMPROVEMENT：Reduce the size of the "In-App Messaging" plugin package
+5.  IMPROVEMENT：Encrypt the request to obtain TPNS token
+6.  NEW FEATURE：Add parameter check logic and error callback for account, tag, and user-attribute interfaces
+7.  DELETED FEATURE：Delete account type enumeration, let the business define itself
+
+
 版本 1.2.9.0
 -------------------------------------------
 1. 修复：富媒体通知可能下载图片失败的问题。

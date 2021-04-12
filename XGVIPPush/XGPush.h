@@ -88,6 +88,14 @@
 - (void)xgPushDidSetBadge:(BOOL)isSuccess error:(nullable NSError *)error;
 
 /**
+ @brief 通知权限弹窗的回调
+
+ @param isEnable 用户是否允许
+ @param error 错误信息
+ */
+- (void)xgPushDidRequestNotificationPermission:(bool)isEnable error:(nullable NSError *)error;
+
+/**
  @brief 设备token注册TPNS服务的回调
 
  @param deviceToken APNs 生成的Device Token
@@ -126,6 +134,12 @@
  @param error TPNS启动错误的信息
  */
 - (void)xgPushDidFinishStart:(BOOL)isSuccess error:(nullable NSError *)error __deprecated_msg("You should no longer call it");
+
+/// TPNS网络连接成功
+- (void)xgPushNetworkConnected;
+
+/// TPNS网络连接断开
+- (void)xgPushNetworkDisconnected;
 
 @end
 
@@ -327,6 +341,15 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  */
 - (void)xgPushDidClearAndAppendTags:(nonnull NSArray<NSString *> *)tags error:(nullable NSError *)error;
 
+/**
+ @brief 对应queryTags:的回调
+
+ @param tags 标签数组
+ @param totalCount 绑定的所有标签总数
+ @param error 查询标签的结果信息
+ */
+- (void)xgPushDidQueryTags:(nullable NSArray<NSString *> *)tags totalCount:(NSUInteger)totalCount error:(nullable NSError *)error;
+
 #pragma mark - ********用户属性相关代理回调，个性化推送使用********
 /**
  @brief 对应upsertAttributes:的回调(TPNS SDK1.2.9.0+)
@@ -370,7 +393,8 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  @param accountsDict 账号数组
  @param error 更新账号的结果信息
  */
-- (void)xgPushDidClearAndAppendAccountsByDict:(nonnull NSDictionary *)accountsDict error:(nullable NSError *)error
+- (void)xgPushDidClearAndAppendAccountsByDict:(nonnull NSDictionary *)accountsDict
+                                        error:(nullable NSError *)error
     __deprecated_msg("recommended to use upsertAccountsByDict: to add accounts,and delegete update to xgPushDidUpsertAccountsByDict:error:");
 
 /**
@@ -401,8 +425,7 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  */
 - (void)xgPushDidClearAndAppendAccounts:(nonnull NSArray<NSDictionary *> *)accounts
                                   error:(nullable NSError *)error
-    __deprecated_msg(
-        "recommended to use upsertAccountsByDict: to add accounts,and delegete update to xgPushDidUpsertAccountsByDict:error:");
+    __deprecated_msg("recommended to use upsertAccountsByDict: to add accounts,and delegete update to xgPushDidUpsertAccountsByDict:error:");
 
 /**
  @brief 监控token对象绑定的情况
@@ -441,8 +464,9 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
 - (void)xgPushDidBindWithIdentifiers:(nonnull NSArray *)identifiers
                                 type:(XGPushTokenBindType)type
                                error:(nullable NSError *)error
-    __deprecated_msg("recommended to use upsertAccountsByDict: to add accounts,and delegete update to xgPushDidUpsertAccountsByDict:error:;use appendTags: to "
-                     "add tags, and delegete update to xgPushDidAppendTags:error:");
+    __deprecated_msg(
+        "recommended to use upsertAccountsByDict: to add accounts,and delegete update to xgPushDidUpsertAccountsByDict:error:;use appendTags: to "
+        "add tags, and delegete update to xgPushDidAppendTags:error:");
 
 /**
  @brief 监控token对象identifiers解绑的情况
@@ -467,9 +491,8 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
 - (void)xgPushDidUpdatedBindedIdentifiers:(nonnull NSArray *)identifiers
                                  bindType:(XGPushTokenBindType)type
                                     error:(nullable NSError *)error
-    __deprecated_msg(
-        "recommended to use upsertAccountsByDict: to add accounts,and delegete update to xgPushDidUpsertAccountsByDict:error:; use "
-        "clearAndAppendTags: to clear and append tags, and delegete update to xgPushDidClearAndAppendTags:error:");
+    __deprecated_msg("recommended to use upsertAccountsByDict: to add accounts,and delegete update to xgPushDidUpsertAccountsByDict:error:; use "
+                     "clearAndAppendTags: to clear and append tags, and delegete update to xgPushDidClearAndAppendTags:error:");
 
 /**
  @brief 监控清除token对象绑定标识的情况
@@ -579,6 +602,16 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  @note 标签字符串不允许有空格或者是tab字符
  */
 - (void)clearAndAppendTags:(nonnull NSArray<NSString *> *)tags;
+
+/**
+ @brief 查询当前设备(tpns token为准)绑定的标签
+
+ @param offset 此次查询的偏移大小
+ @param limit 此次查询的分页大小, 最大200
+ @note 举例:"limit 3 offset 1" 表示跳过1条数据,从第2条数据开始取，取3条数据，也就是取2,3,4三条数据
+ 举例: offset为0，则返回最新的标签集合
+ */
+- (void)queryTags:(NSUInteger)offset limit:(NSUInteger)limit;
 
 #pragma mark - ********用户属性相关方法，个性化推送使用********
 /**
