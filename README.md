@@ -2,6 +2,15 @@
 
 TPNS iOS SDK ReleaseNote
 
+版本 1.3.1.1
+-------------------------------------------
+1. 修复：GCDAsync库可能导致的编译冲突。
+
+VERSION 1.3.1.1
+-------------------------------------------
+1.  FIX：Possible compilation conflicts caused by the GCDAsync library.
+
+
 版本 1.3.1.0
 -------------------------------------------
 1. 修复：TPNS自建通道和APNs通道的播放声音规则不一致问题。
