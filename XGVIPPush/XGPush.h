@@ -226,8 +226,10 @@
 /**
  @brief 上报当前App角标数到TPNS服务器
 
- @param badgeNumber 应用的角标数
- @note 此接口是为了实现角标+1的功能，服务器会在这个数值基础上进行角标数新增的操作，调用成功之后，会覆盖之前值
+ @param badgeNumber 应用的角标数，传递前请计算好结果值(业务逻辑或者其他SDK可能会影响角标数)
+ @note 1.此接口是为了实现角标+1的功能，服务器会在这个数值基础上进行角标数新增的操作，调用成功之后，会覆盖之前值。
+ 2.如果使用RestAPI推送，对应badge_type:-2时生效。
+ 3.调用此接口不会改变当前角标值。
  */
 - (void)setBadge:(NSInteger)badgeNumber;
 
@@ -249,7 +251,9 @@
 /**
  @brief 上报日志信息 (TPNS SDK1.2.4.1+)
  @param handler 异步地返回上报结果
- @note 回调参数可能会被触发多次，如果存在多个日志文件
+ @note 1.回调参数可能会被触发多次，如果存在多个日志文件
+ 2.回调的result, 上传成功为true, 失败为false
+ 3.回调的errorMessage，如果上传成功，则返回日志文件地址。如果上传失败，则返回错误信息。
 */
 - (void)uploadLogCompletionHandler:(nullable void (^)(BOOL result, NSString *_Nullable errorMessage))handler;
 
@@ -527,7 +531,7 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
 @property (weak, nonatomic, nullable) id<XGPushTokenManagerDelegate> delegate;
 
 /**
- @brief 返回当前设备token的字符串
+ @brief 返回当前设备token的字符串，由苹果APNs生成
  */
 @property (copy, nonatomic, nullable, readonly) NSString *deviceTokenString;
 
@@ -539,7 +543,7 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
 #pragma mark - ********账号相关方法，TPNS SDK1.2.8.0+********
 
 /**
- @brief 添加账号(TPNS SDK1.2.9.0+)
+ @brief 添加或更新账号(TPNS SDK1.2.9.0+)
 
  @param accountsDict 账号字典
  @note 若原来没有该类型账号，则添加；若原来有，则覆盖
@@ -548,8 +552,19 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  @note 需要使用字典类型，key为账号类型，value为账号，示例：@{@(accountType):@"account"}；
  Objective-C的写法 : @{@(0):@"account0",@(1):@"account1"}；
  Swift的写法：[NSNumber(0):@"account0",NSNumber(1):@"account1"]
+ @note 账号类型详情可参考文档: https://cloud.tencent.com/document/product/548/50102
  */
 - (void)upsertAccountsByDict:(nonnull NSDictionary<NSNumber *, NSString *> *)accountsDict;
+
+/**
+ @brief 添加或更新用户手机号，等于调用upsertAccountsByDict:@{@(1002):@"具体手机号"}。(TPNS SDK1.3.2.0+)
+
+ @param phoneNumber E.164标准，格式为+[国家或地区码][手机号],例如+8613711112222。SDK内部加密传输。
+ @note 若原来没有该手机号，则添加；若原来有，则覆盖
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note 如需要删除手机号，调用delAccountsByKeys:[[NSSet alloc] initWithObjects:@(1002), nil]
+ */
+- (void)upsertPhoneNumber:(nonnull NSString *)phoneNumber;
 
 /**
  @brief 删除账号(TPNS SDK1.2.9.0+)

@@ -159,7 +159,7 @@ typedef enum {
  设备的idfa，建议有广告权限的app设置此字段
  默认为空
  */
-@property (nonatomic, copy) NSString *ifa;
+//@property (nonatomic, copy) NSString *ifa;
 
 /**
  用户自定义的App版本
@@ -214,5 +214,11 @@ typedef enum {
 
 /// tpns sdk版本
 @property (nonatomic, copy) NSString *tpnsSDKVersion;
+
+/// 是否检查上报域名
+@property (nonatomic, assign) BOOL checkReportDomain;
+
+/// 当前允许的上报域名
+@property (nonatomic, copy) NSString *enableReportDomainStr;
 
 @end
