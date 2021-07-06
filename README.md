@@ -2,6 +2,25 @@
 
 TPNS iOS SDK ReleaseNote
 
+版本 1.3.3.0
+-------------------------------------------
+1. 修复：修复了集群切换没有实时生效的问题。
+2. 修复：修复了tag接口频繁调用时，绑定不准确的问题。
+3. 优化：升级 SDK deployment target 到 9.0。
+4. 优化：提升了"账号绑定"和"注册回调"的性能。
+5. 新增：新增了对RestApi的show_type字段的支持，app前台时可以不展示通知。
+6. 新增：新增了长连接可支持SSL的能力。
+7. 新增：对App启动类型，能区分是由"点击通知"拉起。
+
+版本 1.3.3.0
+-------------------------------------------
+1. Fix: Fixed issue the switch of cluster does not take effect in real time.
+2. Fix: Fixed inaccurate binding issue when the API of tag is called frequently.
+3. Optimization: Upgraded the SDK deployment target to 9.0.
+4. Optimization: Improved The performance of "Account Binding" and "Registration Callback".
+5. Added: Added show_type property in RestApi, which can make the app do not display notifications in the foreground.
+6. Added: Added SSL support for TCP connection.
+7. Added: Added "click on notification" enum for app startup type.
 
 版本 1.3.2.1
 -------------------------------------------

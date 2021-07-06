@@ -96,14 +96,6 @@
 - (void)xgPushDidRequestNotificationPermission:(bool)isEnable error:(nullable NSError *)error;
 
 /**
- @brief 设备token注册TPNS服务的回调
-
- @param deviceToken APNs 生成的Device Token
- @param error 错误信息
- */
-- (void)xgPushDidRegisteredDeviceToken:(nullable NSString *)deviceToken error:(nullable NSError *)error;
-
-/**
  @brief 注册推送服务回调(TPNS SDK1.2.6.0+)
 
  @param deviceToken APNs 生成的Device Token
@@ -127,19 +119,30 @@
 */
 - (void)xgPushLog:(nullable NSString *)logInfo;
 
+/// TPNS网络连接成功
+- (void)xgPushNetworkConnected;
+
+/// TPNS网络连接断开
+- (void)xgPushNetworkDisconnected;
+
+#pragma mark - ********XGPushDelegate,建议废弃的代理回调********
 /**
  @brief 监控TPNS服务地启动情况(已废弃)
 
  @param isSuccess TPNS是否启动成功
  @param error TPNS启动错误的信息
  */
-- (void)xgPushDidFinishStart:(BOOL)isSuccess error:(nullable NSError *)error __deprecated_msg("You should no longer call it");
+- (void)xgPushDidFinishStart:(BOOL)isSuccess error:(nullable NSError *)error
+__deprecated_msg("This method is no longer called, using xgPushDidRegisteredDeviceToken:xgToken:error: instead");
 
-/// TPNS网络连接成功
-- (void)xgPushNetworkConnected;
+/**
+ @brief 设备token注册TPNS服务的回调
 
-/// TPNS网络连接断开
-- (void)xgPushNetworkDisconnected;
+ @param deviceToken APNs 生成的Device Token
+ @param error 错误信息
+ */
+- (void)xgPushDidRegisteredDeviceToken:(nullable NSString *)deviceToken error:(nullable NSError *)error
+__deprecated_msg("recommended to use xgPushDidRegisteredDeviceToken:xgToken:error: instead");
 
 @end
 
@@ -188,14 +191,14 @@
 /**
  @brief 返回TPNS服务的状态
  */
-@property (assign, readonly) BOOL xgNotificationStatus __deprecated_msg("Instead, you should get the status by xgPushDidRegisteredDeviceToken:error:")
+@property (assign, readonly) BOOL xgNotificationStatus __deprecated_msg("Instead, you should get the status by xgPushDidRegisteredDeviceToken:xgToken:error:")
     ;
 
 /**
   @brief 设备在TPNS服务中的是否处于注册状态
  */
 @property (assign, readonly)
-    BOOL deviceDidRegisteredXG __deprecated_msg("Instead, you should get the status by xgPushDidRegisteredDeviceToken:error:");
+    BOOL deviceDidRegisteredXG __deprecated_msg("Instead, you should get the status by xgPushDidRegisteredDeviceToken:xgToken:error:");
 
 /**
  @brief 通过使用在TPNS官网注册的应用的信息，启动TPNS服务
@@ -548,7 +551,7 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  @param accountsDict 账号字典
  @note 若原来没有该类型账号，则添加；若原来有，则覆盖
  @note 账号类型和账号名称一起作为联合主键
- @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:xgToken:error:返回正确之后被调用
  @note 需要使用字典类型，key为账号类型，value为账号，示例：@{@(accountType):@"account"}；
  Objective-C的写法 : @{@(0):@"account0",@(1):@"account1"}；
  Swift的写法：[NSNumber(0):@"account0",NSNumber(1):@"account1"]
@@ -561,7 +564,7 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
 
  @param phoneNumber E.164标准，格式为+[国家或地区码][手机号],例如+8613711112222。SDK内部加密传输。
  @note 若原来没有该手机号，则添加；若原来有，则覆盖
- @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:xgToken:error:返回正确之后被调用
  @note 如需要删除手机号，调用delAccountsByKeys:[[NSSet alloc] initWithObjects:@(1002), nil]
  */
 - (void)upsertPhoneNumber:(nonnull NSString *)phoneNumber;
@@ -572,14 +575,14 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  @param accountsKeys 账号类型组成的集合
  @note 删除指定账号类型下的所有账号
  @note 使用集合且key是固定要求
- @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:xgToken:error:返回正确之后被调用
  */
 - (void)delAccountsByKeys:(nonnull NSSet<NSNumber *> *)accountsKeys;
 
 /**
  @brief 清空已有账号(TPNS SDK1.2.8.0+)
 
- @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:xgToken:error:返回正确之后被调用
  */
 - (void)clearAccounts;
 
@@ -588,7 +591,7 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  @brief 添加标签((TPNS SDK1.2.8.0+)
 
  @param tags 标签数组
- @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:xgToken:error:返回正确之后被调用
  @note tags为标签字符串数组(标签字符串不允许有空格或者是tab字符)
  */
 - (void)appendTags:(nonnull NSArray<NSString *> *)tags;
@@ -597,7 +600,7 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  @brief 删除标签(TPNS SDK1.2.8.0+)
 
  @param tags 指定解绑标识，标签字符串不允许有空格或者是tab字符
- @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用；若需要清除所有标识，建议使用 clearAllIdentifiers:；
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:xgToken:error:返回正确之后被调用；若需要清除所有标识，建议使用 clearAllIdentifiers:；
  @note 对于标签操作identifiers为标签字符串数组(标签字符串不允许有空格或者是tab字符)
  */
 - (void)delTags:(nonnull NSArray<NSString *> *)tags;
@@ -605,7 +608,7 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
 /**
  @brief 清空已有标签(TPNS SDK1.2.8.0+)
 
- @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:xgToken:error:返回正确之后被调用
  */
 - (void)clearTags;
 
@@ -613,7 +616,7 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  @brief 清空已有标签，然后批量添加标签(TPNS SDK1.2.8.0+)
 
  @param tags 标签标识字符串数组，标签字符串不允许有空格或者是tab字符
- @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:xgToken:error:返回正确之后被调用
  @note 标签字符串不允许有空格或者是tab字符
  */
 - (void)clearAndAppendTags:(nonnull NSArray<NSString *> *)tags;
@@ -634,7 +637,7 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
 
  @param attributes 用户属性字符串字典，字符串不允许有空格或者是tab字符
  @note 需要先在管理台配置用户属性的键,才能操作成功
- @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:xgToken:error:返回正确之后被调用
  @note 字符串不允许有空格或者是tab字符
  @note 使用字典且key是固定要求，Objective-C的写法 : @{@"gender": @"Female", @"age": @"29"}；Swift的写法：["gender":"Female", "age": "29"]
  */
@@ -644,7 +647,7 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
 
 @param attributeKeys 用户属性key组成的集合
 
- @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:xgToken:error:返回正确之后被调用
  @note 需要先在管理台配置用户属性的键,才能操作成功
  @note 字符串不允许有空格或者是tab字符
  @note 使用集合且key是固定要求
@@ -654,7 +657,7 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
 /**
  @brief 清空已有用户属性(TPNS SDK1.2.8.0+)
 
- @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:xgToken:error:返回正确之后被调用
  */
 - (void)clearAttributes;
 
@@ -662,7 +665,7 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
  @brief 清空已有用户属性，然后批量添加用户属性(TPNS SDK1.2.8.0+)
 
  @param attributes 用户属性字符串字典，字符串不允许有空格或者是tab字符
- @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:xgToken:error:返回正确之后被调用
  @note 需要先在管理台配置用户属性的键,才能操作成功
  @note 字符串不允许有空格或者是tab字符
  @note 使用字典且key是固定要求，Objective-C的写法 : @{@"gender": @"Female", @"age": @"29"}；Swift的写法：["gender":"Female", "age": "29"]
@@ -896,7 +899,7 @@ typedef NS_OPTIONS(NSUInteger, XGUserNotificationTypes) {
  @brief 清空已有账号，然后批量添加账号(TPNS SDK1.2.9.0+)
 
  @param accountsDict 账号字典
- @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:xgToken:error:返回正确之后被调用
  @note 需要使用字典类型，key为账号类型，value为账号，示例：@{@(accountType):@"account"}；
  Objective-C的写法 : @{@(0):@"account0",@(1):@"account1"}；
  Swift的写法：[NSNumber(0):@"account0",NSNumber(1):@"account1"]
@@ -909,7 +912,7 @@ typedef NS_OPTIONS(NSUInteger, XGUserNotificationTypes) {
 
  @param accounts 账号数组
  @note 账号类型和账号名称一起作为联合主键
- @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:xgToken:error:返回正确之后被调用
  @note 对于账号操作，需要使用字典数组且key是固定要求，Objective-C的写法 : @[@{@"accountType":@(0),@"account":identifier}]；
  Swift的写法：[["accountType":NSNumber(0),"account":identifier]]
  */
@@ -928,7 +931,7 @@ typedef NS_OPTIONS(NSUInteger, XGUserNotificationTypes) {
  @brief 清空已有账号，然后批量添加账号(TPNS SDK1.2.8.0+)
 
  @param accounts 账号数组
- @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:xgToken:error:返回正确之后被调用
  @note 对于账号操作，需要使用字典数组且key是固定要求，Objective-C的写法 : @[@{@"accountType":@(0),@"account":identifier}]；
  Swift的写法：[["accountType":NSNumber(0),"account":identifier]]
  */
@@ -939,7 +942,7 @@ typedef NS_OPTIONS(NSUInteger, XGUserNotificationTypes) {
 
  @param identifier 指定绑定标识
  @param type 指定绑定类型
- @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:xgToken:error:返回正确之后被调用
  @note 对于标签操作，标签字符串不允许有空格或者是tab字符
  */
 - (void)bindWithIdentifier:(nonnull NSString *)identifier
@@ -950,7 +953,7 @@ typedef NS_OPTIONS(NSUInteger, XGUserNotificationTypes) {
 
  @param identifier 指定解绑标识
  @param type 指定解绑类型
- @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用；若需要清除所有标识，建议使用 clearAllIdentifiers:
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:xgToken:error:返回正确之后被调用；若需要清除所有标识，建议使用 clearAllIdentifiers:
  @note 对于标签操作，标签字符串不允许有空格或者是tab字符
  */
 - (void)unbindWithIdentifer:(nonnull NSString *)identifier
@@ -961,7 +964,7 @@ typedef NS_OPTIONS(NSUInteger, XGUserNotificationTypes) {
 
  @param identifiers 指定绑定标识，标签字符串不允许有空格或者是tab字符
  @param type 指定绑定类型
- @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:xgToken:error:返回正确之后被调用
  @note 对于标签操作identifiers为标签字符串数组(标签字符串不允许有空格或者是tab字符)
  @note 对于账号操作，需要使用字典数组且key是固定要求，Objective-C的写法 : @[@{@"account":identifier, @"accountType":@(0)}]；
  Swift的写法：[["account":identifier, "accountType":NSNumber(0)]]
@@ -974,7 +977,7 @@ typedef NS_OPTIONS(NSUInteger, XGUserNotificationTypes) {
 
  @param identifiers 指定解绑标识，标签字符串不允许有空格或者是tab字符
  @param type 指定解绑类型
- @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用；若需要清除所有标识，建议使用 clearAllIdentifiers:；
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:xgToken:error:返回正确之后被调用；若需要清除所有标识，建议使用 clearAllIdentifiers:；
  @note 对于标签操作identifiers为标签字符串数组(标签字符串不允许有空格或者是tab字符)
  @note 对于账号操作，需要使用字典数组且key是固定要求，Objective-C的写法 : @[@{@"account":identifier, @"accountType":@(0)}]；
  Swift的写法：[["account":identifier, "accountType":NSNumber(0)]]
@@ -987,7 +990,7 @@ typedef NS_OPTIONS(NSUInteger, XGUserNotificationTypes) {
 
  @param identifiers 标签标识字符串数组，标签字符串不允许有空格或者是tab字符
  @param type 标识类型
- @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:xgToken:error:返回正确之后被调用
  @note 对于标签操作，标签字符串不允许有空格或者是tab字符
  @note 对于账号操作，需要使用字典数组且key是固定要求，Objective-C的写法 : @[@{@"account":identifier, @"accountType":@(0)}]；
  Swift的写法：[["account":identifier, "accountType":NSNumber(0)]]
@@ -998,7 +1001,7 @@ typedef NS_OPTIONS(NSUInteger, XGUserNotificationTypes) {
 /**
  @brief 清除所有用户属性
 
- @note 此接口应该在xgPushDidRegisteredDeviceToken:error:返回正确之后被调用
+ @note 此接口应该在xgPushDidRegisteredDeviceToken:xgToken:error:返回正确之后被调用
  */
 - (void)clearAllIdentifiers:(XGPushTokenBindType)type __deprecated_msg("recommended to use clearAccounts or clearTags");
 
