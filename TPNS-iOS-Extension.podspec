@@ -7,7 +7,7 @@
   spec.license                                        = 'MIT'
   spec.platform                                        = :ios, '10.0'
   spec.libraries        = 'z'
-  spec.source                                        = { :git => 'http://github.com/TencentCloud/TPNS-iOS-CocoaPods', :branch => 'V1.3.4.0' }
+  spec.source                                        = { :git => 'https://github.com/TencentCloud/TPNS-iOS-CocoaPods', :branch => 'V1.3.4.0' }
   spec.source_files                                = 'XGVIPPush/extension/XGExtension.h'
   spec.public_header_files = 'XGVIPPush/extension/XGExtension.h'
   spec.vendored_libraries                        = 'XGVIPPush/extension/libXGExtension.a'
