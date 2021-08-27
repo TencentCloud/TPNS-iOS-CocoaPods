@@ -18,7 +18,7 @@
 
 @optional
 /// 通过下发的自定义参数去做响应
-/// @param actionName 自定义事件字符串标识
-- (void)onClickWithCustomAction:(NSString *)actionName;
+/// @param actionDic 自定义事件字符串标识
+- (void)onClickWithCustomAction:(NSDictionary *)actionDic;
 
 @end

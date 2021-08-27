@@ -2,6 +2,19 @@
 
 TPNS iOS SDK ReleaseNote
 
+版本 1.3.4.0
+-------------------------------------------
+1. 修复：修复了长链接多次重连后，网络连接偶尔失效的问题。
+2. 修复：修复了App跳转导致TPNS在线状态偶尔不准确的问题。
+3. 增加：增加了使用应用内消息作为补推的能力。
+
+VERSION 1.3.4.0
+-------------------------------------------
+1. Fix: Fixed an issue where network connections occasionally failed after tcp connecton was reconnected multiple times.
+2. Fix: Fixed an issue where App deeplink caused TPNS online status to be occasionally inaccurate.
+3. Added: Added ability to use in-app messages for push message.
+
+
 版本 1.3.3.0
 -------------------------------------------
 1. 修复：修复了集群切换没有实时生效的问题。
