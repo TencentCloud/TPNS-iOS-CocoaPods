@@ -11,5 +11,5 @@
   spec.source                                          = { :git => 'https://github.com/TencentCloud/TPNS-iOS-CocoaPods.git', :branch => 'V1.3.4.1' }
   spec.source_files                        = 'XGVIPPush/XGLocalNotification.h', 'XGVIPPush/XGPush.h', 'XGVIPPush/XGPushPrivate.h'
   spec.vendored_libraries  = 'XGVIPPush/libXG-SDK-Cloud.a'
-  spec.vendored_frameworks = 'XGVIPPush/XGMTACloud.framework', 'XGVIPPush/InAppMessage/TPNSInAppMessage.framework'
+  spec.vendored_frameworks = 'XGVIPPush/XGMTACloud.framework', 'XGVIPPush/InAppMessage/XGInAppMessage.framework'
 end
