@@ -2,6 +2,16 @@
 
 TPNS iOS SDK ReleaseNote
 
+版本 1.3.4.1
+-------------------------------------------
+1. 优化：提升了通知栏状态的准确性。
+2. 增加：修改了应用内消息API接口
+
+VERSION 1.3.4.1
+-------------------------------------------
+1. Optimization：Improved the accuracy of notification bar status.
+2. Added：Modified the in-app messaging API interface.
+
 版本 1.3.4.0
 -------------------------------------------
 1. 修复：修复了长链接多次重连后，网络连接偶尔失效的问题。
