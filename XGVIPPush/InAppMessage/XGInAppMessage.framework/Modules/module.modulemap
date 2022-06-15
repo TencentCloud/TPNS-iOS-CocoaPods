@@ -1,0 +1,6 @@
+framework module XGInAppMessage {
+  umbrella header "XGInAppMessage.h"
+
+  export *
+  module * { export * }
+}

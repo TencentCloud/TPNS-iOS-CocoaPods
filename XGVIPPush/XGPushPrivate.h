@@ -21,6 +21,14 @@
  */
 - (void)configureClusterDomainName:(NSString *)domainName;
 
+/**
+ 配置TPNS的通知状态上报，失败后重试次数
+
+ @param times 重试次数
+ @note 默认3次，配置越大，尝试的次数越多。
+ */
+- (void)configureMonitorNotificationStatusRetryTimes:(int)times;
+
 #pragma mark - ********以下接口，不再使用********
 
 /**

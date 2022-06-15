@@ -8,18 +8,13 @@
 //
 
 #import <Foundation/Foundation.h>
-
-#ifdef __MAC_OS_X_VERSION_MAX_ALLOWED
-#if __MAC_OS_X_VERSION_MAX_ALLOWED >= 101400
-#import <UserNotifications/UserNotifications.h>
-#endif
-#endif
+#import <UIKit/UIKit.h>
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import <UserNotifications/UserNotifications.h>
 #endif
 
-#pragma mark - ********XGPush代理，提供注册及反注册结果回调，消息接收及消息点击回调，设置角标回调********
+#pragma mark - XGPush代理，提供注册及反注册结果回调，消息接收及消息点击回调，设置角标回调
 
 /**
  @brief 监控TPNS服务启动和设备token注册的一组方法
@@ -27,73 +22,8 @@
 @protocol XGPushDelegate <NSObject>
 
 @optional
-/**
- @brief 统一消息出口，此接口对不同操作系统版本的消息接口进行了封装
 
- @param notification 通知内容，需要根据返回类型来确定
- @param completionHandler 接收到消息的回调，必须要调用
- @note 自建通道消息也会通过此回调转发给应用侧使用，自建通道消息体结构与APNs通知消息体结构相同
- */
-- (void)xgPushDidReceiveRemoteNotification:(nonnull id)notification withCompletionHandler:(nullable void (^)(NSUInteger))completionHandler;
-
-/**
-  @brief 处理iOS 10、macOS10.14 UNUserNotification.framework的对应的方法
-
- @param center [UNUserNotificationCenter currentNotificationCenter]
- @param notification 通知对象
- @param completionHandler 回调对象，必须调用
- */
-- (void)xgPushUserNotificationCenter:(nonnull UNUserNotificationCenter *)center
-             willPresentNotification:(nullable UNNotification *)notification
-               withCompletionHandler:(nonnull void (^)(UNNotificationPresentationOptions options))completionHandler __IOS_AVAILABLE(10.0)
-                                         __OSX_AVAILABLE(10.14);
-
-/**
-  @brief 处理iOS 10、macOS10.14 UNUserNotification.framework的对应的方法
-
- @param center [UNUserNotificationCenter currentNotificationCenter]
- @param response 用户对通知消息的响应对象
- @param completionHandler 回调对象，必须调用
- */
-- (void)xgPushUserNotificationCenter:(nonnull UNUserNotificationCenter *)center
-      didReceiveNotificationResponse:(nullable UNNotificationResponse *)response
-               withCompletionHandler:(nonnull void (^)(void))completionHandler __IOS_AVAILABLE(10.0)__OSX_AVAILABLE(10.14);
-
-/// 统一点击回调(TPNS SDK1.2.7.1+)
-/// @param response 如果iOS 10+/macOS 10.14+则为UNNotificationResponse，低于目标版本则为NSDictionary
-- (void)xgPushDidReceiveNotificationResponse:(nonnull id)response withCompletionHandler:(nonnull void (^)(void))completionHandler;
-
-/**
- @brief 监控TPNS服务的终止情况
-
- @param isSuccess TPNS是否终止
- @param error TPNS推动终止错误的信息
- */
-- (void)xgPushDidFinishStop:(BOOL)isSuccess error:(nullable NSError *)error;
-
-/**
- @brief 监控TPNS服务上报推送消息的情况
-
- @param isSuccess 上报是否成功
- @param error 上报失败的信息
- */
-- (void)xgPushDidReportNotification:(BOOL)isSuccess error:(nullable NSError *)error;
-
-/**
- @brief 监控设置TPNS服务器下发角标的情况
-
- @param isSuccess isSuccess 上报是否成功
- @param error 设置失败的信息
- */
-- (void)xgPushDidSetBadge:(BOOL)isSuccess error:(nullable NSError *)error;
-
-/**
- @brief 通知权限弹窗的回调
-
- @param isEnable 用户是否允许
- @param error 错误信息
- */
-- (void)xgPushDidRequestNotificationPermission:(bool)isEnable error:(nullable NSError *)error;
+#pragma mark - ********注册相关回调********
 
 /**
  @brief 注册推送服务回调(TPNS SDK1.2.6.0+)
@@ -112,12 +42,61 @@
 - (void)xgPushDidFailToRegisterDeviceTokenWithError:(nullable NSError *)error;
 
 /**
+ @brief 反注册回调，当您调用了终止TPNS服务接口stopXGNotification时会收到此回调
+
+ @param isSuccess TPNS是否终止
+ @param error TPNS推动终止错误的信息
+ */
+- (void)xgPushDidFinishStop:(BOOL)isSuccess error:(nullable NSError *)error;
+
+#pragma mark - ********通知相关回调********
+
+/**
+ @brief 统一消息出口，此接口对不同操作系统版本的消息接口进行了封装
+
+ @param notification 通知内容，需要根据返回类型来确定
+ @param completionHandler 接收到消息的回调，必须要调用
+ @note 自建通道消息也会通过此回调转发给应用侧使用，自建通道消息体结构与APNs通知消息体结构相同
+ */
+- (void)xgPushDidReceiveRemoteNotification:(nonnull id)notification withCompletionHandler:(nullable void (^)(NSUInteger))completionHandler;
+
+/// 统一点击回调(TPNS SDK1.2.7.1+)
+/// @param response 如果iOS 10+/macOS 10.14+则为UNNotificationResponse，低于目标版本则为NSDictionary
+- (void)xgPushDidReceiveNotificationResponse:(nonnull id)response withCompletionHandler:(nonnull void (^)(void))completionHandler;
+
+#pragma mark - ********其他相关回调********
+
+/**
+ @brief 监控设置TPNS服务器下发角标的情况
+
+ @param isSuccess isSuccess 上报是否成功
+ @param error 设置失败的信息
+ */
+- (void)xgPushDidSetBadge:(BOOL)isSuccess error:(nullable NSError *)error;
+
+/**
+ @brief 通知权限弹窗的回调
+
+ @param isEnable 用户是否允许
+ @param error 错误信息
+ */
+- (void)xgPushDidRequestNotificationPermission:(bool)isEnable error:(nullable NSError *)error;
+
+/**
 @brief TPNS日志回调方法
 
 @param logInfo 日志信息
 @note 可以在此方法获取TPNS的log日志。此方法和XGPush->enableDebug无关。
 */
 - (void)xgPushLog:(nullable NSString *)logInfo;
+
+/**
+@brief TPNS采集字段回调方法，如果需要知道TPNS采集的字段可实现此方法
+
+@param field 字段信息
+@param description 字段描述
+*/
+- (void)xgPushDidCollectField:(nonnull NSString *)field andDescription:(nonnull NSString *)description;
 
 /// TPNS网络连接成功
 - (void)xgPushNetworkConnected;
@@ -132,8 +111,9 @@
  @param isSuccess TPNS是否启动成功
  @param error TPNS启动错误的信息
  */
-- (void)xgPushDidFinishStart:(BOOL)isSuccess error:(nullable NSError *)error
-__deprecated_msg("This method is no longer called, using xgPushDidRegisteredDeviceToken:xgToken:error: instead");
+- (void)xgPushDidFinishStart:(BOOL)isSuccess
+                       error:(nullable NSError *)error
+    __deprecated_msg("This method is no longer called, using xgPushDidRegisteredDeviceToken:xgToken:error: instead");
 
 /**
  @brief 设备token注册TPNS服务的回调
@@ -141,12 +121,47 @@ __deprecated_msg("This method is no longer called, using xgPushDidRegisteredDevi
  @param deviceToken APNs 生成的Device Token
  @param error 错误信息
  */
-- (void)xgPushDidRegisteredDeviceToken:(nullable NSString *)deviceToken error:(nullable NSError *)error
-__deprecated_msg("recommended to use xgPushDidRegisteredDeviceToken:xgToken:error: instead");
+- (void)xgPushDidRegisteredDeviceToken:(nullable NSString *)deviceToken
+                                 error:(nullable NSError *)error
+    __deprecated_msg("recommended to use xgPushDidRegisteredDeviceToken:xgToken:error: instead");
+
+/**
+ @brief 监控TPNS服务上报推送消息的情况
+
+ @param isSuccess 上报是否成功
+ @param error 上报失败的信息
+ */
+- (void)xgPushDidReportNotification:(BOOL)isSuccess
+                              error:(nullable NSError *)error __deprecated_msg("You should no longer call it, SDK handles it automatically.");
+
+/**
+  @brief 处理iOS 10、macOS10.14 UNUserNotification.framework的对应的方法
+
+ @param center [UNUserNotificationCenter currentNotificationCenter]
+ @param notification 通知对象
+ @param completionHandler 回调对象，必须调用
+ */
+- (void)xgPushUserNotificationCenter:(nonnull UNUserNotificationCenter *)center
+             willPresentNotification:(nullable UNNotification *)notification
+               withCompletionHandler:(nonnull void (^)(UNNotificationPresentationOptions options))completionHandler __IOS_AVAILABLE(10.0)
+                                         __OSX_AVAILABLE(10.14)
+                                             __deprecated_msg("recommended to use xgPushDidReceiveRemoteNotification:withCompletionHandler: instead");
+
+/**
+  @brief 处理iOS 10、macOS10.14 UNUserNotification.framework的对应的方法
+
+ @param center [UNUserNotificationCenter currentNotificationCenter]
+ @param response 用户对通知消息的响应对象
+ @param completionHandler 回调对象，必须调用
+ */
+- (void)xgPushUserNotificationCenter:(nonnull UNUserNotificationCenter *)center
+      didReceiveNotificationResponse:(nullable UNNotificationResponse *)response
+               withCompletionHandler:(nonnull void (^)(void))completionHandler __IOS_AVAILABLE(10.0)__OSX_AVAILABLE(10.14)
+                                         __deprecated_msg("recommended to use xgPushDidReceiveNotificationResponse:withCompletionHandler: instead");
 
 @end
 
-#pragma mark - ********XGPush类，提供注册及反注册，设置角标等方法********
+#pragma mark - XGPush类，提供注册及反注册，设置角标等方法
 
 @class XGNotificationConfigure;
 
@@ -166,10 +181,9 @@ __deprecated_msg("recommended to use xgPushDidRegisteredDeviceToken:xgToken:erro
  */
 @property (weak, nonatomic, nullable, readonly) id<XGPushDelegate> delegate;
 
-/**
- @brief TPNS管理对象，管理推送的配置选项，例如，注册推送的样式
- */
-@property (nullable, strong, nonatomic) XGNotificationConfigure *notificationConfigure;
+/// 应用启动的代理对象
+/// @note 当SDK框架出现自动化处理的异常时，可以通过此属性进行设置，对应用代理对象处理逻辑进行补足
+@property (weak, nonatomic, nullable) id<UIApplicationDelegate> appDelegate;
 
 /**
  @brief 这个开关表明是否打印TPNS SDK的日志信息
@@ -189,16 +203,11 @@ __deprecated_msg("recommended to use xgPushDidRegisteredDeviceToken:xgToken:erro
 @property (nonatomic, strong) NSMutableDictionary *_Nullable launchOptions;
 
 /**
- @brief 返回TPNS服务的状态
+ @brief TPNS管理对象，管理推送的配置选项，例如，注册推送的样式
  */
-@property (assign, readonly) BOOL xgNotificationStatus __deprecated_msg("Instead, you should get the status by xgPushDidRegisteredDeviceToken:xgToken:error:")
-    ;
+@property (nullable, strong, nonatomic) XGNotificationConfigure *notificationConfigure;
 
-/**
-  @brief 设备在TPNS服务中的是否处于注册状态
- */
-@property (assign, readonly)
-    BOOL deviceDidRegisteredXG __deprecated_msg("Instead, you should get the status by xgPushDidRegisteredDeviceToken:xgToken:error:");
+#pragma mark - ********注册及反注册方法********
 
 /**
  @brief 通过使用在TPNS官网注册的应用的信息，启动TPNS服务
@@ -217,14 +226,7 @@ __deprecated_msg("recommended to use xgPushDidRegisteredDeviceToken:xgToken:erro
  */
 - (void)stopXGNotification;
 
-/**
-@brief 上报统计数据
-@note 此接口只需要在mac OS 启动方法中调用
-*/
-
-#if TARGET_OS_MAC
-- (void)reportXGNotificationInfo:(nonnull NSDictionary *)info;
-#endif
+#pragma mark - ********其他相关方法********
 
 /**
  @brief 上报当前App角标数到TPNS服务器
@@ -268,6 +270,8 @@ __deprecated_msg("recommended to use xgPushDidRegisteredDeviceToken:xgToken:erro
 
 @end
 
+#pragma mark - XGPushTokenManager代理，用于接收账号和标签操作的回调
+
 /**
  @brief 设备token绑定的类型，绑定指定类型之后，就可以在TPNS前端按照指定的类型进行指定范围的推送
 
@@ -280,8 +284,6 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
     XGPushTokenBindTypeAccount = (1 << 0),
     XGPushTokenBindTypeTag = (1 << 1)
 };
-
-#pragma mark - ********XGPushTokenManager代理，用于接收账号和标签操作的回调********
 
 /**
  @brief 定义了一组关于设备token绑定，解绑账号和标签的回调方法，用以监控绑定和解绑的情况
@@ -514,7 +516,7 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
 
 @end
 
-#pragma mark - ********XGPushTokenManager，提供账号和标签的绑定与解绑操作********
+#pragma mark - XGPushTokenManager，提供账号和标签的绑定与解绑操作
 
 @interface XGPushTokenManager : NSObject
 
@@ -592,7 +594,7 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
 
  @param tags 标签数组
  @note 此接口应该在xgPushDidRegisteredDeviceToken:xgToken:error:返回正确之后被调用
- @note tags为标签字符串数组(标签字符串不允许有空格或者是tab字符)
+ @note tags为标签字符串数组，最多不超过500个(标签字符串不允许有空格或者是tab字符，长度不超过50)
  */
 - (void)appendTags:(nonnull NSArray<NSString *> *)tags;
 
@@ -601,7 +603,7 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
 
  @param tags 指定解绑标识，标签字符串不允许有空格或者是tab字符
  @note 此接口应该在xgPushDidRegisteredDeviceToken:xgToken:error:返回正确之后被调用；若需要清除所有标识，建议使用 clearAllIdentifiers:；
- @note 对于标签操作identifiers为标签字符串数组(标签字符串不允许有空格或者是tab字符)
+ @note tags为标签字符串数组，最多不超过500个(标签字符串不允许有空格或者是tab字符，长度不超过50)
  */
 - (void)delTags:(nonnull NSArray<NSString *> *)tags;
 
@@ -617,7 +619,7 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
 
  @param tags 标签标识字符串数组，标签字符串不允许有空格或者是tab字符
  @note 此接口应该在xgPushDidRegisteredDeviceToken:xgToken:error:返回正确之后被调用
- @note 标签字符串不允许有空格或者是tab字符
+ @note tags为标签字符串数组，最多不超过500个(标签字符串不允许有空格或者是tab字符，长度不超过50)
  */
 - (void)clearAndAppendTags:(nonnull NSArray<NSString *> *)tags;
 
@@ -683,7 +685,7 @@ typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
 
 @end
 
-#pragma mark - ********XGNotificationAction，可以在通知栏中点击的事件对象********
+#pragma mark - XGNotificationAction，可以在通知栏中点击的事件对象
 
 /**
  @brief 点击行为对象的属性配置
@@ -733,7 +735,7 @@ typedef NS_ENUM(NSUInteger, XGNotificationActionOptions) {
 
 @end
 
-#pragma mark - ********XGNotificationCategory，管理一组关联的Action，以实现不同分类对应不同的Actions********
+#pragma mark - XGNotificationCategory，管理一组关联的Action，以实现不同分类对应不同的Actions
 
 /**
  @brief 分类对象的属性配置
@@ -790,7 +792,7 @@ typedef NS_OPTIONS(NSUInteger, XGNotificationCategoryOptions) {
 
 @end
 
-#pragma mark - ********XGNotificationConfigure，配置消息通知的样式和行为特性********
+#pragma mark - XGNotificationConfigure，配置消息通知的样式和行为特性
 
 /**
  @brief 注册通知支持的类型
@@ -849,11 +851,24 @@ typedef NS_OPTIONS(NSUInteger, XGUserNotificationTypes) {
 
 @end
 
-#pragma mark - ********XGPush类，提供注册及反注册，设置角标等方法，Deprecated********
+#pragma mark - XGPush Deprecated
+
 /**
  @brief 管理TPNS服务的对象，负责注册推送权限、消息的管理、调试模式的开关设置等
  */
 @interface XGPush (Deprecated)
+
+/**
+ @brief 返回TPNS服务的状态
+ */
+@property (assign, readonly)
+    BOOL xgNotificationStatus __deprecated_msg("Instead, you should get the status by xgPushDidRegisteredDeviceToken:xgToken:error:");
+
+/**
+  @brief 设备在TPNS服务中的是否处于注册状态
+ */
+@property (assign, readonly)
+    BOOL deviceDidRegisteredXG __deprecated_msg("Instead, you should get the status by xgPushDidRegisteredDeviceToken:xgToken:error:");
 
 /**
  @brief 通过使用在TPNS官网注册的应用的信息，启动TPNS服务
@@ -882,7 +897,7 @@ typedef NS_OPTIONS(NSUInteger, XGUserNotificationTypes) {
 
 @end
 
-#pragma mark - ********XGPushTokenManager，提供账号和标签的绑定与解绑操作，Deprecated********
+#pragma mark - XGPushTokenManager Deprecated
 
 @interface XGPushTokenManager (Deprecated)
 

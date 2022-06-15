@@ -12,7 +12,7 @@
  XGPushStatMTA版本号
  */
 
-#define MTA_SDK_VERSION @"2.5.8"
+#define MTA_SDK_VERSION @"2.6.0"
 
 #pragma mark - 接口监控相关数据结构
 /**

@@ -2,6 +2,84 @@
 
 TPNS iOS SDK ReleaseNote
 
+版本 1.3.9.0
+-------------------------------------------
+1. 修复已知问题。
+2. 优化：提升业务接口性能。
+
+VERSION 1.3.9.0
+-------------------------------------------
+1. Fix: Fixed known issues.
+2. Optimization: Improve performance for some API interface.
+
+版本 1.3.8.0
+-------------------------------------------
+1. 修复：修复了点击通知栏的自建通道消息，冷启动App，并且TPNS SDK延迟启动的情况下，偶现的上报点击事件失败的问题。
+2. 优化：提升缓存文件IO性能。
+3. 新增：新增VoIP能力（只支持海外用户）。
+
+VERSION 1.3.8.0
+-------------------------------------------
+1. Fix: Fixed the occasional failure to report click events when clicking the self-built channel message in the notification bar, cold-starting the app, and delaying the startup of the TPNS SDK.
+2. Optimization: Improve IO performance for cache file.
+3. New: Added VoIP capability (only supports overseas users).
+
+版本 1.3.7.0
+-------------------------------------------
+1. 优化：优化注册流程日志，方便问题排查。
+2. 优化：优化抵达插件上报策略。
+
+VERSION 1.3.7.0
+-------------------------------------------
+1. Optimization: Optimize the registration process log to facilitate troubleshooting.
+2. Optimization: Optimize the arrival plugin reporting strategy.
+
+版本 1.3.6.0
+-------------------------------------------
+1. 修复：修复冷启动模式下，SDK启动方法调用延后导致的点击数据无法上报问题。
+2. 优化：更新数据上报策略，提升统计数据准确性。
+3. 优化：优化SDK鉴权机制，提高安全性。
+4. 增加：支持使用原生通知中心代理方法(UNUserNotificationCenterDelegate)。
+
+VERSION 1.3.6.0
+-------------------------------------------
+1. Fix: Fix the problem that click data cannot be reported due to delay in calling the SDK start method under cold start mode.
+2. Optimization: Update the data reporting strategy to improve the accuracy of statistical data.
+3. Optimization: Optimize the SDK authentication mechanism to improve security.
+4. Added: Support the use of native UNUserNotificationCenterDelegate method.
+
+版本 1.3.5.0
+-------------------------------------------
+1. 优化：增加数据上报的超时时间,5s->15s。
+2. 优化：优化了SDK的鉴权机制，提高了安全性。
+
+VERSION 1.3.5.0
+-------------------------------------------
+1. Optimization: Increase the timeout time of data reporting from 5s to15s.
+2. Optimization: Optimize the authentication mechanism of SDK to improve security.
+
+版本 1.3.4.1
+-------------------------------------------
+1. 优化：提升了通知栏状态的准确性。
+2. 增加：修改了应用内消息API接口
+
+VERSION 1.3.4.1
+-------------------------------------------
+1. Optimization：Improved the accuracy of notification bar status.
+2. Added：Modified the in-app messaging API interface.
+
+版本 1.3.4.0
+-------------------------------------------
+1. 修复：修复了长链接多次重连后，网络连接偶尔失效的问题。
+2. 修复：修复了App跳转导致TPNS在线状态偶尔不准确的问题。
+3. 增加：增加了使用应用内消息作为补推的能力。
+
+VERSION 1.3.4.0
+-------------------------------------------
+1. Fix: Fixed an issue where network connections occasionally failed after tcp connecton was reconnected multiple times.
+2. Fix: Fixed an issue where App deeplink caused TPNS online status to be occasionally inaccurate.
+3. Added: Added ability to use in-app messages for push message.
+
 版本 1.3.3.0
 -------------------------------------------
 1. 修复：修复了集群切换没有实时生效的问题。
@@ -53,7 +131,6 @@ VERSION 1.3.2.1
 VERSION 1.3.1.1
 -------------------------------------------
 1.  FIX：Possible compilation conflicts caused by the GCDAsync library.
-
 
 版本 1.3.1.0
 -------------------------------------------
@@ -107,7 +184,6 @@ VERSION 1.3.0.0
 6.  NEW FEATURE：Add parameter check logic and error callback for account, tag, and user-attribute interfaces
 7.  DELETED FEATURE：Delete account type enumeration, let the business define itself
 
-
 版本 1.2.9.0
 -------------------------------------------
 1. 修复：富媒体通知可能下载图片失败的问题。
@@ -140,7 +216,6 @@ VERSION 1.2.9.0
 12. NEW FEATURE：Ipv6 support.
 13. DELETED FEATURE: Compatible code for the XinGe's free version.
 
-
 VERSION 1.2.8.1
 -------------------------------------------
 1. 修复已知问题
@@ -148,6 +223,7 @@ VERSION 1.2.8.1
 版本 1.2.8.1
 -------------------------------------------
 1. Fixed known issues
+
 VERSION 1.2.8.0
 -------------------------------------------
 1. Added  "user attributes"  for personalized push
@@ -159,7 +235,6 @@ VERSION 1.2.8.0
 1. 新增「用户属性」相关接口，用于个性化推送
 2. 新增「应用内消息」功能，以及若干应用内消息模板
 3. 修复已知问题
-
 
 VERSION 1.2.7.2
 -------------------------------------------
@@ -186,6 +261,7 @@ VERSION 1.2.7.1
 2. 新增注册失败的回调接口
 3. 优化账号、标签接口
 4. 修复已知问题
+
 VERSION 1.2.6.1
 -------------------------------------------
 1. Improve stability, fix known issues caused by SDK
