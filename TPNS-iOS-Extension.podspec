@@ -2,12 +2,12 @@
   spec.name					= 'TPNS-iOS-Extension'
   spec.version					= '1.3.9.0'
   spec.summary					= '腾讯移动推送(iOS)'
-  spec.homepage					= 'http://cloud.tencent.com/product/tpns/'
+  spec.homepage					= 'https://cloud.tencent.com/product/tpns/'
   spec.authors					= 'tencent'
   spec.license					= 'MIT'
   spec.platform					= :ios, '10.0'
   spec.libraries        = 'z'
-  spec.source					= { :git => 'http://github.com/TencentCloud/TPNS-iOS-CocoaPods', :branch => 'V1.3.9.0' }
+  spec.source					= { :git => 'https://github.com/TencentCloud/TPNS-iOS-CocoaPods', :branch => 'V1.3.9.0' }
   spec.source_files				= 'XGVIPPush/extension/XGExtension.h'
   spec.public_header_files = 'XGVIPPush/extension/XGExtension.h'
   spec.vendored_libraries			= 'XGVIPPush/extension/libXGExtension.a'
