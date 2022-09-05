@@ -2,6 +2,16 @@
 
 TPNS iOS SDK ReleaseNote
 
+版本 1.3.9.1
+-------------------------------------------
+1. 修复：修复已知问题。
+2. 优化：替换上报域名，减少上报带宽消耗。
+
+VERSION 1.3.9.1
+-------------------------------------------
+1. Fix: Fixed known issues.
+2. Optimization: Replace the reporting domain name to reduce the reporting bandwidth consumption.
+
 版本 1.3.9.0
 -------------------------------------------
 1. 修复已知问题。

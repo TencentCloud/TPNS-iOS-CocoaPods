@@ -10,7 +10,7 @@
 #import <UserNotifications/UserNotifications.h>
 
 #if TARGET_OS_IPHONE
-#define kExtensionSDKVersion @"1.3.9.0"
+#define kExtensionSDKVersion @"1.3.9.1"
 #elif TARGET_OS_MAC
 #define kExtensionSDKVersion @"1.0.4.0"
 #endif
@@ -24,6 +24,10 @@ NS_AVAILABLE(10_14, 10_0)
 */
 @property (nonatomic, copy, nullable) NSString *reportDomainName;
 @property (nonatomic, copy, nullable) NSString *reportHost __deprecated_msg("You should use reportDomainName instead");
+
+/// 消息到达后是否上报抵达回执，抵达回执可在TPNS管理台查看
+/// YES；如果您不需要抵达回执数据分析可设置为NO
+@property BOOL isReportArrive;
 
 /// 是否开启替换重复消息，default
 /// NO；如果设置为YES，则需要同时根据实际情况设置属性defaultTitle、defaultSubtitle、defaultContent的值；重复消息替换只支持最新的两条消息之间的替换
