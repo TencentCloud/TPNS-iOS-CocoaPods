@@ -1,6 +1,14 @@
-﻿在线集成文档地址：https://cloud.tencent.com/document/product/548/36663。
+﻿TPNS iOS SDK ReleaseNote
 
-TPNS iOS SDK ReleaseNote
+版本 1.3.9.2
+-------------------------------------------
+1. 修复：修复已知问题。
+2. 优化：分离厂商通道和自建通道注册依赖，缩短注册流程。
+
+VERSION 1.3.9.2
+-------------------------------------------
+1. Fix: Fixed known issues.
+2. Optimization: Separate the registration dependence between the apns channel and the tpns channel, shortening the registration process.
 
 版本 1.3.9.1
 -------------------------------------------
@@ -297,7 +305,7 @@ VERSION 1.2.6.0
 VERSION 1.2.5.4
 -------------------------------------------
 * Improve stability, fix known issues caused by SDK
-	
+    
 版本 1.2.5.4
 -------------------------------------------
 * 提升稳定性，修复已知问题
