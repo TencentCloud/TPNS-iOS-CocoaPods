@@ -268,6 +268,13 @@
 */
 - (BOOL)clearTPNSCache;
 
+/**
+ @brief 设置采集字段信息 (TPNS SDK1.3.9.4+)
+ @note 格式为@{@"采集字段key":@"字段值value"},目前key取值仅支持"idfv","deviceName","deviceModel"
+ @note 此接口需在startXG之前调用
+*/
+- (void)customFieldDic:(nonnull NSDictionary *)fieldDic;
+
 @end
 
 #pragma mark - XGPushTokenManager代理，用于接收账号和标签操作的回调
