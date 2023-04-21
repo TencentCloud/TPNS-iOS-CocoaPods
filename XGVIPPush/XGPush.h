@@ -226,6 +226,23 @@
  */
 - (void)stopXGNotification;
 
+#pragma mark - ********实时活动********
+/**
+ @brief 实时活动回调结果
+ @param result 返回请求的liveActivity的id和token @{@"activityId":@"idValue", @"token":@"tokenValue"}
+ */
+typedef void(^XGPushLiveActivityCompletion)(NSDictionary * _Nonnull result, NSError *_Nullable error);
+
+/**
+ @brief 开始实时活动，pushToken有变化时需重新调用
+
+ @param activityId liveActivity的名字
+ @param token liveActivity对应的pushToken，该token有变化时需要及时调用此方法更新
+ @param completionHandler 请求回执，error为nil代表请求成功
+ @note 实时活动结束时需要及时调用该方法且pushToken传nil
+ */
+- (void)startLiveActivityWithId:(nonnull NSString *)activityId pushToken:(nullable NSString *)token withCompletionHandler:(nullable XGPushLiveActivityCompletion)completionHandler __API_AVAILABLE(ios(16.1));
+
 #pragma mark - ********其他相关方法********
 
 /**
@@ -270,7 +287,7 @@
 
 /**
  @brief 设置采集字段信息 (TPNS SDK1.3.9.4+)
- @note 格式为@{@"采集字段key":@"字段值value"},目前key取值仅支持"idfv","deviceName","deviceModel"
+ @note 格式为@{@"采集字段key":@"字段值value"},目前key取值仅支持"idfv","deviceName","deviceModel","apsEnvironment"
  @note 此接口需在startXG之前调用
 */
 - (void)customFieldDic:(nonnull NSDictionary *)fieldDic;
