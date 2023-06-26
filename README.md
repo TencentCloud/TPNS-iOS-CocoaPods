@@ -1,5 +1,15 @@
 ﻿TPNS iOS SDK ReleaseNote
 
+版本 1.3.9.6
+-------------------------------------------
+1. 修复：修复手机型号多次采集的潜在风险。
+2. 优化：优化头部卡顿问题。
+
+VERSION 1.3.9.6
+-------------------------------------------
+1. Fix: Fixed potential risk of multiple phone model collection.
+2. Optimization: Optimized the head anr problem.
+
 版本 1.3.9.5
 -------------------------------------------
 1. 修复：修复已知问题。
