@@ -2,15 +2,15 @@
 
 版本 1.3.9.7
 -------------------------------------------
-1.新增：新增xcframework库类型。
-2.优化：优化自建通道对新系统特性的支持。
-3.修复：修复已知问题。
+1. 新增：新增xcframework库类型。
+2. 优化：优化自建通道对新系统特性的支持。
+3. 修复：修复已知问题。
 
 VERSION 1.3.9.7
 -------------------------------------------
-1.New: Added xcframework library types.
-2.Optimization: Optimize the support of tpns channels for new system features.
-3.Fix: Fixed known issues.
+1. New: Added xcframework library types.
+2. Optimization: Optimize the support of tpns channels for new system features.
+3. Fix: Fixed known issues.
 
 
 版本 1.3.9.6
