@@ -181,14 +181,22 @@
  */
 @property (weak, nonatomic, nullable, readonly) id<XGPushDelegate> delegate;
 
-/// 应用启动的代理对象
-/// @note 当SDK框架出现自动化处理的异常时，可以通过此属性进行设置，对应用代理对象处理逻辑进行补足
+/**
+ @brief 应用启动的代理对象
+ @note 当SDK框架出现自动化处理的异常时，可以通过此属性进行设置，对应用代理对象处理逻辑进行补足
+ */
 @property (weak, nonatomic, nullable) id<UIApplicationDelegate> appDelegate;
 
 /**
  @brief 这个开关表明是否打印TPNS SDK的日志信息
  */
 @property (assign, getter=isEnableDebug) BOOL enableDebug;
+
+/**
+ @brief 调用startXG注册前，赋值此参数可将集成渠道信息传给我们
+ @note sdkChannel取值如下none、flutter、rn、unity、apicloud、donut、msdk、other
+ */
+@property (copy, nonatomic, nullable) NSString *sdkChannel;
 
 /**
  @brief 管理应用角标
@@ -205,7 +213,7 @@
 /**
  @brief TPNS管理对象，管理推送的配置选项，例如，注册推送的样式
  */
-@property (nullable, strong, nonatomic) XGNotificationConfigure *notificationConfigure;
+@property (strong, nonatomic, nullable) XGNotificationConfigure *notificationConfigure;
 
 #pragma mark - ********注册及反注册方法********
 
@@ -747,12 +755,12 @@ typedef NS_ENUM(NSUInteger, XGNotificationActionOptions) {
 /**
  @brief 点击行为的标识
  */
-@property (nullable, nonatomic, copy, readonly) NSString *identifier;
+@property (nonatomic, copy, readonly, nullable) NSString *identifier;
 
 /**
  @brief 点击行为的标题
  */
-@property (nullable, nonatomic, copy, readonly) NSString *title;
+@property (nonatomic, copy, readonly, nullable) NSString *title;
 
 /**
  @brief 点击行为的特性
@@ -809,7 +817,7 @@ typedef NS_OPTIONS(NSUInteger, XGNotificationCategoryOptions) {
 /**
  @brief 可用以Siri意图的标识组
  */
-@property (nullable, readonly, copy, nonatomic) NSArray<NSString *> *intentIdentifiers;
+@property (readonly, copy, nonatomic, nullable) NSArray<NSString *> *intentIdentifiers;
 
 /**
  @brief 分类的特性
@@ -863,7 +871,7 @@ typedef NS_OPTIONS(NSUInteger, XGUserNotificationTypes) {
 /**
  @brief 返回消息通知栏配置对象
  */
-@property (readonly, nullable, strong, nonatomic) NSSet<XGNotificationCategory *> *categories;
+@property (readonly, strong, nonatomic, nullable) NSSet<XGNotificationCategory *> *categories;
 
 /**
  @brief 返回注册推送的样式类型
