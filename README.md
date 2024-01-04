@@ -1,5 +1,17 @@
 ﻿TPNS iOS SDK ReleaseNote
 
+版本 1.4.0.0
+-------------------------------------------
+1.优化：缩短注册链路，提升注册成功率。
+2.优化：账号绑定接口添加短链策略。
+3.修复：修复已知问题。
+
+VERSION 1.4.0.0
+-------------------------------------------
+1.Optimization: Shorten register links and improve the register success rate.
+2.Optimization: Account api add http strategy.
+3.Fix: Fixed known issues.
+
 版本 1.3.9.8
 -------------------------------------------
 1. 新增：新增SDK渠道字段。

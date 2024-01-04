@@ -11,6 +11,13 @@
 
 #import "XGPush.h"
 
+typedef NS_ENUM(NSUInteger, XGPushAccountNetworkType) {
+    XGPushAccountNetworkTypeUNKNOWN = 0,
+    XGPushAccountNetworkTypeHTTP,  /// 仅使用短链
+    XGPushAccountNetworkTypeMQTT,  /// 仅使用长链
+    XGPushAccountNetworkTypeAUTO  /// 自动，先使用长链，长链失败后使用一次短链
+};
+
 @interface XGPush (XGPushPrivate)
 
 /**
@@ -28,6 +35,14 @@
  @note 默认3次，配置越大，尝试的次数越多。
  */
 - (void)configureMonitorNotificationStatusRetryTimes:(int)times;
+
+/**
+ 配置账号绑定请求方式
+
+ @param type 请求方式
+ @note 默认使用长链，如需更换策略请在注册方法startXG之前调用。
+ */
+- (void)configureAccountNetworkType:(XGPushAccountNetworkType)type;
 
 #pragma mark - ********以下接口，不再使用********
 

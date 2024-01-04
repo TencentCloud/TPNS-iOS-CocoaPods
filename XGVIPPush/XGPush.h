@@ -31,6 +31,7 @@
  @param deviceToken APNs 生成的Device Token
  @param xgToken TPNS 生成的 Token，推送消息时需要使用此值。TPNS 维护此值与APNs 的 Device Token的映射关系
  @param error 错误信息，若error为nil则注册推送服务成功
+ @note 1.3.9.9及以上版本请使用厂商token回调获取deviceToken，回调方法为xgPushDidRegisterForRemoteNotificationsWithDeviceToken:
  */
 - (void)xgPushDidRegisteredDeviceToken:(nullable NSString *)deviceToken xgToken:(nullable NSString *)xgToken error:(nullable NSError *)error;
 
@@ -65,6 +66,14 @@
 - (void)xgPushDidReceiveNotificationResponse:(nonnull id)response withCompletionHandler:(nonnull void (^)(void))completionHandler;
 
 #pragma mark - ********其他相关回调********
+
+/**
+ @brief 厂商(APNs)token回调1.3.9.9新增
+
+ @param deviceToken 厂商(APNs)token，可变长度，不要硬编码它们的大小
+ @note 厂商token字符串类型可使用[[XGPushTokenManager defaultTokenManager] deviceTokenString]获取
+ */
+- (void)xgPushDidRegisterForRemoteNotificationsWithDeviceToken:(nullable NSData *)deviceToken;
 
 /**
  @brief 监控设置TPNS服务器下发角标的情况
