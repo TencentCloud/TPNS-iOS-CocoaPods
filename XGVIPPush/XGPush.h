@@ -321,6 +321,7 @@ typedef void (^XGPushLiveActivityCompletion)(NSDictionary *_Nonnull result, NSEr
  - XGPushTokenBindTypeNone: 当前设备token不绑定任何类型，可以使用token单推，或者是全量推送（不推荐使用 ）
  - XGPushTokenBindTypeAccount: 当前设备token与账号绑定之后，可以使用账号推送
  - XGPushTokenBindTypeTag: 当前设备token与指定标签绑定之后，可以使用标签推送
+ @note 此枚举是老版本接口（bind/unbind/update identifier）用于区分业务（账号/标签）的枚举，新版本账号/标签接口已拆分，无需使用此枚举
  */
 typedef NS_ENUM(NSUInteger, XGPushTokenBindType) {
     XGPushTokenBindTypeNone = (0),
