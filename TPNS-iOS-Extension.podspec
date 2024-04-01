@@ -10,5 +10,5 @@
   spec.source					     = { :git => 'https://github.com/TencentCloud/TPNS-iOS-CocoaPods', :branch => 'V1.4.0.1' }
   spec.source_files				 = 'XGVIPPush/XGPushStatistics/extension/XGExtension.h'
   spec.vendored_libraries	 = 'XGVIPPush/XGPushStatistics/extension/libXGExtension.a'
-  s.resource_bundles       = {'TPNS-iOS-Extension' => ['XGVIPPush/XGPushStatistics/extension/PrivacyInfo.xcprivacy']}
+  spec.resource_bundles       = {'TPNS-iOS-Extension' => ['XGVIPPush/XGPushStatistics/extension/PrivacyInfo.xcprivacy']}
 end
