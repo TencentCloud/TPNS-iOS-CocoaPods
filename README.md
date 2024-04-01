@@ -1,4 +1,14 @@
-﻿TPNS iOS SDK ReleaseNote
+TPNS iOS SDK ReleaseNote
+
+版本 1.4.0.1
+-------------------------------------------
+1.新增：xcframework新增隐私清单文件。
+2.优化：优化部分日志链路。
+
+VERSION 1.4.0.1
+-------------------------------------------
+1.New: xcframework add privacy file.
+2.Optimization: Optimize some log links.
 
 版本 1.4.0.0
 -------------------------------------------
