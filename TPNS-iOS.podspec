@@ -12,5 +12,5 @@
   spec.source_files        = 'XGVIPPush/XGLocalNotification.h', 'XGVIPPush/XGPush.h', 'XGVIPPush/XGPushPrivate.h', 'XGVIPPush/XGVoIPService.h'
   spec.vendored_libraries  = 'XGVIPPush/libXG-SDK-Cloud.a'
   spec.vendored_frameworks = 'XGVIPPush/XGMTACloud.framework', 'XGVIPPush/InAppMessage/XGInAppMessage.framework'
-  spec.resource_bundles    = {'TPNS-iOS' => ['XGVIPPush/PrivacyInfo.xcprivacy']}
+  spec.resource_bundle     = {'TPNS-iOS-Privacy' => 'PrivacyInfo.xcprivacy'}
 end
