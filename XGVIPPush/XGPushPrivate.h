@@ -44,6 +44,30 @@ typedef NS_ENUM(NSUInteger, XGPushAccountNetworkType) {
  */
 - (void)configureAccountNetworkType:(XGPushAccountNetworkType)type;
 
+/**
+ 业务侧调用自定义请求后，将响应结果回传给SDK
+
+ @param responseInfo 业务侧请求TPNS后台响应结果
+ */
+typedef void (^XGPushCustomRegisterResponseHandler)(NSDictionary *responseInfo);
+
+/**
+ 自定义注册配置后，SDK内部通知业务侧请求注册
+
+ @param customRequestDic 注册请求参数，如果为空表示SDK内部处理，无需请求
+ @note 由于网络监测，频率限制等因素customRequestDic返回可能为nil，此时业务侧无需请求，交由SDK处理
+ */
+typedef void (^XGPushCustomRegisterRequestHandler)(NSDictionary *customRequestDic);
+
+/**
+ 自定义注册配置接口
+
+ @param completionHandler 业务侧调用配置自定义注册接口后，SDK内部初始化后，回传给业务侧去调用注册
+ @return XGPushCustomRegisterResponseHandler 业务侧请求TPNS后台有结果后，需调用此句柄将结果registerInfo回传给我们
+ @note 此接口需在初始化接口startXG之前调用。
+ */
+- (XGPushCustomRegisterResponseHandler)configureCustomRegisterWithCompletionHandler:(XGPushCustomRegisterRequestHandler)completionHandler;
+
 #pragma mark - ********以下接口，不再使用********
 
 /**

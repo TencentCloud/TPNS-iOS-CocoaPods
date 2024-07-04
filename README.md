@@ -1,5 +1,13 @@
 TPNS iOS SDK ReleaseNote
 
+版本 1.4.0.2
+-------------------------------------------
+1.新增：注册流程支持业务侧自定义。
+
+VERSION 1.4.0.2
+-------------------------------------------
+1.New: The registration interface supports customization on the business side.
+
 版本 1.4.0.1
 -------------------------------------------
 1.新增：xcframework新增隐私清单文件。

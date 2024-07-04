@@ -70,7 +70,7 @@
 /**
  @brief 厂商(APNs)token回调1.3.9.9新增
 
- @param deviceToken 厂商(APNs)token，可变长度，不要硬编码它们的大小
+ @param deviceToken 厂商(APNs)token，可变长度，不要硬编码它们的大小，若为空则代表获取失败
  @note 厂商token字符串类型可使用[[XGPushTokenManager defaultTokenManager] deviceTokenString]获取
  */
 - (void)xgPushDidRegisterForRemoteNotificationsWithDeviceToken:(nullable NSData *)deviceToken;
