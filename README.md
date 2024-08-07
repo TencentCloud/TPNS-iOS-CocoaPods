@@ -1,5 +1,15 @@
 TPNS iOS SDK ReleaseNote
 
+版本 1.4.0.3
+-------------------------------------------
+1.优化：优化极端场景下上报组件初始化失败的问题。
+2.修复：修复已知问题。
+
+VERSION 1.4.0.3
+-------------------------------------------
+1.Optimization: Optimize the problem of mta initialization failure in bad case.
+2.Fix: Fixed known issues.
+
 版本 1.4.0.2
 -------------------------------------------
 1.新增：注册流程支持业务侧自定义。
