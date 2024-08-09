@@ -2,43 +2,43 @@ TPNS iOS SDK ReleaseNote
 
 版本 1.4.0.3
 -------------------------------------------
-1.优化：优化极端场景下上报组件初始化失败的问题。
-2.修复：修复已知问题。
+1. 优化：优化极端场景下上报组件初始化失败的问题。
+2. 修复：修复已知问题。
 
 VERSION 1.4.0.3
 -------------------------------------------
-1.Optimization: Optimize the problem of mta initialization failure in bad case.
-2.Fix: Fixed known issues.
+1. Optimization: Optimize the problem of mta initialization failure in bad case.
+2. Fix: Fixed known issues.
 
 版本 1.4.0.2
 -------------------------------------------
-1.新增：注册流程支持业务侧自定义。
+1. 新增：注册流程支持业务侧自定义。
 
 VERSION 1.4.0.2
 -------------------------------------------
-1.New: The registration interface supports customization on the business side.
+1. New: The registration interface supports customization on the business side.
 
 版本 1.4.0.1
 -------------------------------------------
-1.新增：xcframework新增隐私清单文件。
-2.优化：优化部分日志链路。
+1. 新增：xcframework新增隐私清单文件。
+2. 优化：优化部分日志链路。
 
 VERSION 1.4.0.1
 -------------------------------------------
-1.New: xcframework add privacy file.
-2.Optimization: Optimize some log links.
+1. New: xcframework add privacy file.
+2. Optimization: Optimize some log links.
 
 版本 1.4.0.0
 -------------------------------------------
-1.优化：缩短注册链路，提升注册成功率。
-2.优化：账号绑定接口添加短链策略。
-3.修复：修复已知问题。
+1. 优化：缩短注册链路，提升注册成功率。
+2. 优化：账号绑定接口添加短链策略。
+3. 修复：修复已知问题。
 
 VERSION 1.4.0.0
 -------------------------------------------
-1.Optimization: Shorten register links and improve the register success rate.
-2.Optimization: Account api add http strategy.
-3.Fix: Fixed known issues.
+1. Optimization: Shorten register links and improve the register success rate.
+2. Optimization: Account api add http strategy.
+3. Fix: Fixed known issues.
 
 版本 1.3.9.8
 -------------------------------------------
