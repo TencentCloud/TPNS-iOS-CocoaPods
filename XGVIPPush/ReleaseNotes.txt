@@ -1,5 +1,15 @@
 TPNS iOS SDK ReleaseNote
 
+版本 1.4.0.5
+-------------------------------------------
+1.优化：优化注册链路及定时器逻辑。
+2.修复：修复已知问题。
+
+VERSION 1.4.0.5
+-------------------------------------------
+1.Optimization: Optimize registration link and timer logic.
+2.Fix: Fixed known issues.
+
 版本 1.4.0.4
 -------------------------------------------
 1.新增：自建通道新增对relevanceScore字段的支持。
