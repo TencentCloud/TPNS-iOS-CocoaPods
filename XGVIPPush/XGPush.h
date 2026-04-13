@@ -266,6 +266,7 @@ typedef void (^XGPushLiveActivityCompletion)(NSDictionary *_Nonnull result, NSEr
  @brief 上传远程启动实时活动的token以及实时活动对应的属性类型
 
  @param activityAttributes 实时活动属性类型
+ @param attributesSubType 实时活动二级分类，如不需要细分某类实时活动可传nil
  @param pushToStartToken 实时活动远程启动所需的token
  @param completionHandler 请求回执，error为nil代表请求成功
  @note iOS17.2以后支持远程启动实时活动，当您有远程启动实时活动需求时，可以使用此方法提前将token上传到服务端
@@ -273,6 +274,7 @@ typedef void (^XGPushLiveActivityCompletion)(NSDictionary *_Nonnull result, NSEr
  @note 业务侧某些场景下如取消订阅，需要将activityAttributes该类型的实时活动下的该用户解绑，可以将pushToStartToken传nil
  */
 - (void)uploadLiveActivityWithAttributes:(nonnull NSString *)activityAttributes
+                       attributesSubType:(nullable NSString *)attributesSubType
                         pushToStartToken:(nullable NSString *)pushToStartToken
                    withCompletionHandler:(nullable XGPushLiveActivityCompletion)completionHandler __API_AVAILABLE(ios(17.2));
 
